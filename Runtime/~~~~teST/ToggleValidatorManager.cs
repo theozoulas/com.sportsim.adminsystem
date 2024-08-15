@@ -16,6 +16,8 @@ public class ToggleValidatorManager : Validator
 
     private Toggle _toggle;
     private ToggleValidationSprite _toggleValidationSprite;
+    
+    //test
 
     
     private void Awake()
