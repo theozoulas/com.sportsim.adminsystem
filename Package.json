@@ -1,6 +1,6 @@
-﻿{
+{
   "name": "com.sportsim.adminsystem",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "displayName": "Admin System",
   "description": "A plugin designed to reskin existing games",
   "unity": "2019.4",
