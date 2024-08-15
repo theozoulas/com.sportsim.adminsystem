@@ -1,0 +1,29 @@
+﻿{
+  "name": "com.sportsim.adminsystem",
+  "version": "0.1.0",
+  "displayName": "Admin System",
+  "description": "A plugin designed to reskin existing games",
+  "unity": "2019.4",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "author": {
+    "name": "Theo",
+    "email": "unity@example.com",
+    "url": "https://www.unity3d.com"
+  },
+  "type": "tool",
+  "samples": [
+    {
+      "displayName": "Sample Scenes",
+      "description": "Sample Scenes used to recreate basic game menus.",
+      "path": "Samples/Scenes"
+    }
+  ]
+}
