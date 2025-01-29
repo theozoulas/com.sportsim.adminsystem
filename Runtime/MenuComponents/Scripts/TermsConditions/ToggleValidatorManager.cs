@@ -16,12 +16,9 @@ public class ToggleValidatorManager : Validator
 
     private Toggle _toggle;
     private ToggleValidationSprite _toggleValidationSprite;
+
+    public bool IsOn => _toggle.isOn;
     
-    //test
-    //test 2
-    //test 3
-    //test 4
-    //test 5
     
     private void Awake()
     {
@@ -31,12 +28,19 @@ public class ToggleValidatorManager : Validator
         _toggle.onValueChanged.AddListener(OnToggleValueChange);
     }
 
+    /// <summary>
+    /// Editor Button to fill documents pages.
+    /// </summary>
     [Button(ButtonSizes.Medium)]
     private void FillDocumentPages()
     {
         documentPanel.GetComponent<AddPagesToPanel>().AddPages(documentPages, documentPagePrefab);
     }
 
+    /// <summary>
+    /// Toggle Sprite on Toggle Value Change.
+    /// </summary>
+    /// <param name="isOn"></param>
     private void OnToggleValueChange(bool isOn)
     {
         if(!mandatory) return;
@@ -44,6 +48,10 @@ public class ToggleValidatorManager : Validator
         _toggleValidationSprite.ToggleSprite(isOn);
     }
 
+    /// <summary>
+    /// Toggle Validation.
+    /// </summary>
+    /// <returns></returns>
     public override bool Validate()
     {
         return !mandatory || _toggle.isOn;

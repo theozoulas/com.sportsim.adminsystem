@@ -5,6 +5,7 @@ using MenuComponents.SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = System.Object;
 
 namespace MenuComponents.Leaderboard
 {
@@ -13,6 +14,7 @@ namespace MenuComponents.Leaderboard
     /// </summary>
     public class LeaderboardManager : MonoBehaviour
     {
+        [SerializeField] private LeaderboardDataProvider leaderboardDataProvider;
         [SerializeField] private Transform entryPrefab;
         [SerializeField] private  GameObject leaderBoardPanel;
         [SerializeField] private string playerNameDataField;

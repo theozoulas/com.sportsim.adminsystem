@@ -36,10 +36,11 @@ namespace MenuComponents.DynamicSystem
             {
                 { "Home", this, EditorIcons.House },
                 { "Data Entry", this, EditorIcons.File },
-                { "Colour", BaseDynamicManager.Instance, EditorIcons.EyeDropper },
-                { "Text Colour", BaseDynamicManager.Instance, EditorIcons.SpeechBubbleRound },
-                { "Text Font", BaseDynamicManager.Instance, EditorIcons.PenAdd },
-                { "Logos", BaseDynamicManager.Instance, EditorIcons.Image }
+                { "Colour", BaseDynamicMenu.Instance, EditorIcons.EyeDropper },
+                { "Text Colour", BaseDynamicMenu.Instance, EditorIcons.SpeechBubbleRound },
+                { "Text Font", BaseDynamicMenu.Instance, EditorIcons.PenAdd },
+                { "Logos", BaseDynamicMenu.Instance, EditorIcons.Image },
+                { "Leaderboard", LeaderboardDynamicMenu.Instance, EditorIcons.List }
             };
 
             tree.AddScriptableObjectsAtPath("Colour", Resources.LoadAll<ScriptableObject>("AdminSystem/ColourPallets"));

@@ -11,6 +11,7 @@ namespace MenuComponents.SaveSystem
     {
         public DataFieldValue[] DataFieldValues { get; }
         public string TimeRegistered { get; }
+        public string NumberOfPlays { get; set; }
         public int Score { get; set; }
 
         /// <summary>

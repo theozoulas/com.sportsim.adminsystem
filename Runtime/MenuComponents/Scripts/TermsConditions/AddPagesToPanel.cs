@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class AddPagesToPanel : MonoBehaviour
 {
+    /// <summary>
+    /// Adds pages from a sprite array to a terms and conditions panel.
+    /// </summary>
+    /// <param name="pages"></param>
+    /// <param name="pagePrefab"></param>
     public void AddPages(Sprite[] pages, GameObject pagePrefab)
     {
         var childrenImages = transform.GetComponentsInChildren<Image>();

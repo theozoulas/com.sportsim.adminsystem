@@ -6,7 +6,7 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
-public  class BaseDynamicManager : GlobalConfig<BaseDynamicManager>
+public  class BaseDynamicMenu : GlobalConfig<BaseDynamicMenu>
 {
     /// <summary>
     /// Refresh all scripts which will call OnValidate().
