@@ -4,7 +4,7 @@ using System.Linq;
 using MenuComponents.SaveSystem;
 using UnityEngine;
 
-public abstract class LeaderboardDataProvider : ScriptableObject
+public abstract class LeaderboardDataProvider
 {
    public List<PlayerData> GetLeaderboardData(PlayerData playerData = null)
    {

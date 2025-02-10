@@ -66,13 +66,11 @@ namespace MenuComponents.Utility
         /// <summary>
         /// Method <c>GoToMenuSavePlayerData</c> Go to main menu and save the current players data.
         /// </summary>
-        public void GoToMenuSavePlayerData()
+        public void GoToMenu()
         {
             if (_coroutine != null) return;
             
-            SaveSystem.SaveManager.SaveCurrentPlayerData();
             _coroutine = StartCoroutine(WaitButtonAudioThenLoadScene(0));
-
         }
 
         /// <summary>

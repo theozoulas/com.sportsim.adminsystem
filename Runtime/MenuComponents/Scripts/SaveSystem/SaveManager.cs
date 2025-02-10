@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using TMPro;
 using UnityEngine;
 
 namespace MenuComponents.SaveSystem
@@ -13,8 +15,9 @@ namespace MenuComponents.SaveSystem
         public static readonly string SavedPath =
             Application.persistentDataPath + "/playerData.data";
 
-        public static PlayerData currentPlayerData;
-        public static SavedData StaticSavedData { get; } = new SavedData();
+        public static readonly ScoreData StaticScoreData = ScoreDynamicMenu.Instance.mainScoreData;
+
+        private static PlayerData _currentPlayerData;
 
 
         /// <summary>
@@ -37,21 +40,76 @@ namespace MenuComponents.SaveSystem
         }
 
         /// <summary>
-        /// Static Method <c>UpdateStaticScore</c> Update static saved score.
+        /// Static TryGet Method <c>TryLoadPlayerData</c> Try load player data from local storage.
         /// </summary>
-        /// <param name="score"></param>
-        public static void UpdateStaticScore(int score)
+        /// <param name="playerData"></param>
+        /// <returns>Tries to return a list of <c>PlayerData</c></returns>
+        public static bool TryLoadPlayerData(out List<PlayerData> playerData)
         {
-            StaticSavedData.SavedScore = score;
+            playerData = new List<PlayerData>();
+
+            if (!File.Exists(SavedPath)) return false;
+
+            var formatter = new BinaryFormatter();
+
+            var fileStream = new FileStream(SavedPath, FileMode.Open);
+
+            playerData = formatter.Deserialize(fileStream) as List<PlayerData>;
+
+            fileStream.Close();
+
+            return true;
         }
 
         /// <summary>
-        /// Static Method <c>SaveCurrentPlayerData</c> Save the current player data.
+        /// Static Method <c>SetCurrentPlayerData</c> Set current player data.
         /// </summary>
-        public static void SaveCurrentPlayerData()
+        /// <param name="playerData"></param>
+        public static void SetCurrentPlayerData(PlayerData playerData)
         {
+            _currentPlayerData = playerData;
+            SavePlayer(_currentPlayerData);
+        }
+
+        /// <summary>
+        /// Static Method <c>UpdateStaticScore</c> Update static saved score.
+        /// </summary>
+        /// <param name="score"></param>
+        public static void UpdateStaticScore(float score)
+        {
+            if (_currentPlayerData == null) return;
+
+            StaticScoreData.SetValue(score);
             SavePlayerScore();
-            SavePlayer(currentPlayerData);
+            SavePlayer(_currentPlayerData);
+        }
+
+        /// <summary>
+        /// Static Method <c>UpdateExtraScoreData</c> Finds and updates extra score data with an ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        public static void UpdateExtraScoreData(string id, float value)
+        {
+            if (!TryGetExtraScoreFromId(id, out var extraScoreDataFound)) return;
+
+            extraScoreDataFound.SetValue(value);
+        }
+
+        /// <summary>
+        /// Static TryGet Method <c>UpdateExtraScoreData</c> Find a extra score data with an ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="extraScoreData"></param>
+        /// <returns>Returns true if found extra data</returns>
+        public static bool TryGetExtraScoreFromId(string id, out ExtraScoreData extraScoreData)
+        {
+            extraScoreData = ScoreDynamicMenu
+                .Instance
+                .extraScoreData
+                .FirstOrDefault(sd => sd.scoreID == id);
+
+            return extraScoreData != null;
         }
 
         /// <summary>
@@ -59,7 +117,7 @@ namespace MenuComponents.SaveSystem
         /// </summary>
         public static void ResetStaticScore()
         {
-            StaticSavedData.SavedScore = 0;
+            StaticScoreData.ResetValue();
         }
 
         /// <summary>
@@ -69,16 +127,18 @@ namespace MenuComponents.SaveSystem
         public static PlayerData GetCurrentPlayerDataBestScore()
         {
             SavePlayerScore();
-            return currentPlayerData;
+            return _currentPlayerData;
         }
 
         /// <summary>
         /// Static Method <c>SavePlayerScore</c> Save player score if larger.
         /// </summary>
-        public static void SavePlayerScore()
+        private static void SavePlayerScore()
         {
-            if (StaticSavedData.SavedScore >= currentPlayerData.Score)
-                currentPlayerData.Score = StaticSavedData.SavedScore;
+            if (!(StaticScoreData.Value >= _currentPlayerData.Score)) return;
+
+            _currentPlayerData.Score = StaticScoreData.Value;
+            _currentPlayerData.ScoreFormatted = StaticScoreData.GetAsStringFormatted();
         }
 
         /// <summary>
@@ -87,16 +147,46 @@ namespace MenuComponents.SaveSystem
         /// <param name="playerData"></param>
         private static void SavePlayer(PlayerData playerData)
         {
-            var playersData = LoadPlayerData() ?? new List<PlayerData>();
+            var loadedPlayerData
+                = TryLoadPlayerData(out var playersData);
 
             var formatter = new BinaryFormatter();
             var fileStream = new FileStream(SavedPath, FileMode.Create);
 
-            if (File.Exists(SavedPath)) playersData.Add(playerData);
+            if (loadedPlayerData)
+            {
+                var foundPlayer = UpdatePlayerInList(ref playersData, ref playerData);
+                if (!foundPlayer) playersData.Add(playerData);
+            }
             else playersData.Add(playerData);
 
             formatter.Serialize(fileStream, playersData);
             fileStream.Close();
+        }
+
+        /// <summary>
+        /// Static Method <c>UpdatePlayerFromList</c> Updates Player in the List if Score is better.
+        /// </summary>
+        /// <param name="playerList"></param>
+        /// <param name="playerData"></param>
+        /// <returns>Returns true if found player</returns>
+        private static bool UpdatePlayerInList(ref List<PlayerData> playerList, ref PlayerData playerData)
+        {
+            var currentPlayerGuid = playerData.Guid;
+
+            var foundPlayerData
+                = playerList.FirstOrDefault(pd => pd.Guid == currentPlayerGuid);
+
+            if (foundPlayerData == null) return false;
+
+            if (playerData.Score > foundPlayerData.Score)
+            {
+                foundPlayerData.Score = playerData.Score;
+                foundPlayerData.ScoreFormatted = playerData.ScoreFormatted;
+            }
+            else playerData.ScoreFormatted = foundPlayerData.ScoreFormatted;
+
+            return true;
         }
     }
 }

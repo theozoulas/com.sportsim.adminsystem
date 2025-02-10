@@ -21,9 +21,9 @@ public class OnScreenKeyboard : MonoBehaviour
     public GameObject[] keys;
     public GameObject[] specialKeys;
 
-    [FormerlySerializedAs("specialColorPallet")] public ColourDynamicData specialColorDynamicData;
-    [FormerlySerializedAs("specialTextColorPallet")] public ColourDynamicData specialTextColorDynamicData;
-    [FormerlySerializedAs("textColorPallet")] public ColourDynamicData textColorDynamicData;
+    [FormerlySerializedAs("specialColorDynamicData")] [FormerlySerializedAs("specialColorPallet")] public CustomMenuItemData specialColorData;
+    [FormerlySerializedAs("specialTextColorDynamicData")] [FormerlySerializedAs("specialTextColorPallet")] public CustomMenuItemData specialTextColorData;
+    [FormerlySerializedAs("textColorDynamicData")] [FormerlySerializedAs("textColorPallet")] public CustomMenuItemData textColorData;
 
     [HideInInspector]
     public bool isActive = false;
@@ -56,9 +56,9 @@ public class OnScreenKeyboard : MonoBehaviour
     void Start()
     {
         ShowNumeric(showNumeric);
-        SetTextColor(textColorDynamicData.colour, specialTextColorDynamicData.colour);
+        SetTextColor(textColorData.colour, specialTextColorData.colour);
         SetMainColor(mainColor);
-        SetSpecialColor(specialColorDynamicData.colour);
+        SetSpecialColor(specialColorData.colour);
         SetBackgroundColor(backgroundColor);
         SetMainSprite(mainSprite);
         SetSpecialSprite(specialSprite);

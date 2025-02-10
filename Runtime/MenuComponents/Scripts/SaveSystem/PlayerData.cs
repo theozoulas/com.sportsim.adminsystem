@@ -11,8 +11,11 @@ namespace MenuComponents.SaveSystem
     {
         public DataFieldValue[] DataFieldValues { get; }
         public string TimeRegistered { get; }
-        public string NumberOfPlays { get; set; }
-        public int Score { get; set; }
+        public int NumberOfPlays { get; set; }
+        public float Score { get; set; }
+
+        public string ScoreFormatted { get; set; }
+        public Guid Guid { get; private set; }
 
         /// <summary>
         /// Constructor <c>PlayerData</c> Constructs player data with passed params. 
@@ -23,6 +26,7 @@ namespace MenuComponents.SaveSystem
         {
             DataFieldValues = dataFieldValues;
             TimeRegistered = timeRegistered;
+            Guid = Guid.NewGuid();
         }
 
         /// <summary>
@@ -33,6 +37,19 @@ namespace MenuComponents.SaveSystem
         public string GetDataFieldValueByName(string name)
         {
             return DataFieldValues.FirstOrDefault(d => d.dataName.Equals(name))?.dataValue;
+        }
+
+        /// <summary>
+        /// TryGet Method <c>TryGetDataFieldValueByName</c> Try Get Data Field Value by the name passed.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="result"></param>
+        /// <returns>Returns true if found data field by name as <c>bool</c></returns>
+        public bool TryGetDataFieldValueByName(string name, out string result)
+        {
+            result = DataFieldValues.FirstOrDefault(d => d.dataName.Equals(name))?.dataValue;
+            
+            return result != null;
         }
     }
 }

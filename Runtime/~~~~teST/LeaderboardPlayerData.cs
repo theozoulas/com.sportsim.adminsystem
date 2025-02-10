@@ -1,9 +1,9 @@
 ﻿public class LeaderboardPlayerData
 {
     public readonly string Name;
-    public readonly int Score;
+    public readonly float Score;
 
-    public LeaderboardPlayerData(string name,  int score)
+    public LeaderboardPlayerData(string name,  float score)
     {
         Name = name;
         Score = score;

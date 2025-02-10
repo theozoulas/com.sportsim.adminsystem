@@ -7,13 +7,13 @@ namespace MenuComponents.DynamicSystem
 {
     public class TextDynamicColour : MonoBehaviour
     {
-        [FormerlySerializedAs("colourPallet")] [SerializeField] private ColourDynamicData colourDynamicData;
+        [FormerlySerializedAs("menuItemDynamicData")] [FormerlySerializedAs("colourDynamicData")] [FormerlySerializedAs("colourPallet")] [SerializeField] private CustomMenuItemData customMenuItemData;
 
         public void OnValidate()
         {
-            if(colourDynamicData == null) return;
+            if(customMenuItemData == null) return;
         
-            GetComponent<TMP_Text>().color = colourDynamicData.colour;
+            GetComponent<TMP_Text>().color = customMenuItemData.colour;
         }
     }
 }

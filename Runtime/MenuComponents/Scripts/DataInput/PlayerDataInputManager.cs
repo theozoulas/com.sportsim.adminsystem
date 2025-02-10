@@ -55,8 +55,8 @@ namespace MenuComponents.DataInput
             var newPlayerData = new PlayerData(
                 dataFieldValues.ToArray(),
                 timeRegistered);
-            
-            SaveManager.currentPlayerData = newPlayerData;
+
+            SaveManager.SetCurrentPlayerData(newPlayerData);
             
             StartGame();
         }

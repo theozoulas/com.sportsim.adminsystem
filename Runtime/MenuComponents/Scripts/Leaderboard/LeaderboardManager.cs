@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MenuComponents.DynamicSystem;
 using MenuComponents.SaveSystem;
+using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using static LeaderboardDynamicMenu;
 using Object = System.Object;
 
 namespace MenuComponents.Leaderboard
@@ -14,18 +18,35 @@ namespace MenuComponents.Leaderboard
     /// </summary>
     public class LeaderboardManager : MonoBehaviour
     {
-        [SerializeField] private LeaderboardDataProvider leaderboardDataProvider;
         [SerializeField] private Transform entryPrefab;
         [SerializeField] private  GameObject leaderBoardPanel;
         [SerializeField] private string playerNameDataField;
 
-        [SerializeField] private ColourDynamicData rankTextColour;
-        [SerializeField] private ColourDynamicData entryTextColour;
+        [FormerlySerializedAs("rankTextMenuItem")] [FormerlySerializedAs("rankTextColour")] [SerializeField] private CustomMenuItemData rankTextCustomMenuItem;
+        [FormerlySerializedAs("entryTextMenuItem")] [FormerlySerializedAs("entryTextColour")] [SerializeField] private CustomMenuItemData entryTextCustomMenuItem;
 
         private List<PlayerData> _playerDataList;
         
-        private bool _isLoaded;
+        private LeaderboardDataProvider _leaderboardDataProvider;
         
+        private bool _isLoaded;
+
+        public int test = 1;
+
+        private void Awake()
+        {
+            _leaderboardDataProvider = GetLeaderboardProvider();
+        }
+
+        private LeaderboardDataProvider GetLeaderboardProvider()
+        {
+            return GlobalConfig<LeaderboardDynamicMenu>.Instance.dataProviderType switch
+            {
+                LeaderboardDataProviders.SaveSystem => new LoadLeaderboardDataSaveSystem(),
+                LeaderboardDataProviders.Online => new LoadLeaderboardDataOnline(),
+                _ => new LoadLeaderboardDataSaveSystem()
+            };
+        }
 
         private void Start()
         {
@@ -39,7 +60,7 @@ namespace MenuComponents.Leaderboard
         {
             if (_isLoaded) return;
 
-            _playerDataList = GetLeaderboardData(SaveManager.GetCurrentPlayerDataBestScore());
+            _playerDataList = GetLeaderboardData();
 
             var leaderBoardList =
                 leaderBoardPanel
@@ -73,13 +94,13 @@ namespace MenuComponents.Leaderboard
             var nameField = newEntry.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             var scoreField = newEntry.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-            rankField.color = rankTextColour.colour;
-            nameField.color = entryTextColour.colour;
-            scoreField.color = entryTextColour.colour;
+            rankField.color = rankTextCustomMenuItem.colour;
+            nameField.color = entryTextCustomMenuItem.colour;
+            scoreField.color = entryTextCustomMenuItem.colour;
 
             rankField.text = (i + 1).ToString();
             nameField.text = playerData.GetDataFieldValueByName(playerNameDataField);
-            scoreField.text = playerData.Score.ToString();
+            scoreField.text = playerData.ScoreFormatted;
         }
 
         /// <summary>
@@ -87,23 +108,19 @@ namespace MenuComponents.Leaderboard
         /// </summary>
         /// <param name="playerData"></param>
         /// <returns>Returns a list of <c>PlayerData</c> </returns>
-        private static List<PlayerData> GetLeaderboardData(PlayerData playerData = null)
+        private static List<PlayerData> GetLeaderboardData()
         {
             var playerDataList = SaveManager.LoadPlayerData();
 
             if (playerDataList != null)
             {
-                if (playerData != null)
-                {
-                    playerDataList.Add(playerData);
-                }
                 var sortedPlayerDataList =
                     playerDataList.OrderByDescending(data => data.Score).ToList();
                 
                 return sortedPlayerDataList;
             }
 
-            playerDataList = new List<PlayerData> { playerData };
+            playerDataList = new List<PlayerData>();
 
             return playerDataList;
         }

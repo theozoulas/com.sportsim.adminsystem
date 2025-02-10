@@ -6,7 +6,7 @@
     [System.Serializable]
     public class SavedData
     {
-        public int SavedScore { get; set; }
+        public int Value { get; set; }
     }
 }
 

@@ -47,7 +47,7 @@ public static class HttpsRequest
 
         var form = new WWWForm();
         form.AddField("Name", playerData.Name);
-        form.AddField("Score", playerData.Score);
+        form.AddField("Score", (int)playerData.Score);
 
         using (var www = UnityWebRequest.Post(URL + "postScore.asp", form))
         {
