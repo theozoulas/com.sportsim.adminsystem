@@ -12,8 +12,10 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using static UnityEditor.AssetDatabase;
 
-[Serializable]
-public class MenuItemData
+
+[CreateAssetMenu(fileName = "dsfsdfs", menuName = "ScriptableObjects/dsfdsfsd", order = 1)] 
+[InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
+public class MenuItemData : ScriptableObject
 {
     [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
     public Color color;
@@ -43,12 +45,12 @@ public class MenuItemData
     [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [ShowIf("useCustomSize")]
     public Vector2 customSpriteSize;
 
-    [HideInInspector] public bool noDefaultSprite;
+    [HideInInlineEditors] public bool noDefaultSprite;
 
     protected const string GUIPath =
         "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal/";
 
-    [HideInInspector] public string key;
+    [HideInInlineEditors] public string key;
 
 
     public MenuItemData(string key, Color color, bool noDefaultSprite)

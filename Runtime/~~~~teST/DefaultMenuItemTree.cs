@@ -10,6 +10,7 @@ using Sirenix.Utilities.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static UnityEditor.AssetDatabase;
 
 public class DefaultMenuItemTree : GlobalConfig<DefaultMenuItemTree>
 {
@@ -20,6 +21,9 @@ public class DefaultMenuItemTree : GlobalConfig<DefaultMenuItemTree>
 
     public Dictionary<string, MenuItemData> DefaultMenuItemDataDic =>
         defaultMenuItemData.ToDictionary(cd => cd.key, cd => cd);
+    
+    private string testPath =
+    "Packages/com.sportsim.adminsystem/Runtime/OtherTest/MenuItem";
 
     /// <summary>
     /// Refresh all scripts which will call OnValidate().
@@ -31,22 +35,27 @@ public class DefaultMenuItemTree : GlobalConfig<DefaultMenuItemTree>
         EditorUtility.RequestScriptReload();
     }
 
-    private readonly MenuItemData[] _defaultMenuItemDataReference =
-    {
-        new("Background", Color.white, true),
-        new ButtonMenuItem("Button", Color.white, false),
-        new ButtonMenuItem("Splash Button", Color.white, false),
-        new DataEntryItem("Data Entry Input", Color.white, false),
-        new("Keyboard Special Button", Color.white, true),
-        new LeaderboardEntryItem("Leaderboard Entry", Color.white, false),
-        new LeaderboardEntryItem("sdfsd Entry", Color.white, false),
-    };
+    // private readonly MenuItemData[] _defaultMenuItemDataReference =
+    // {
+    //     new("Background", Color.white, true),
+    //     new ButtonMenuItem("Button", Color.white, false),
+    //     new ButtonMenuItem("Splash Button", Color.white, false),
+    //     new DataEntryItem("Data Entry Input", Color.white, false),
+    //     new("Keyboard Special Button", Color.white, true),
+    //     new LeaderboardEntryItem("Leaderboard Entry", Color.white, false),
+    //     new LeaderboardEntryItem("sdfsd Entry", Color.white, false),
+    // };
 
     [OnInspectorInit]
     private void InspectorInit()
     {
-        if (defaultMenuItemData.Length == _defaultMenuItemDataReference.Length) return;
+        var assets = FindAssets("t:ScriptableObject", new[] { "Packages/com.sportsim.adminsystem/Runtime/OtherTest/MenuItem" });
 
-        defaultMenuItemData = _defaultMenuItemDataReference;
+        foreach (var asset in assets)
+        {
+            Debug.Log(LoadAssetAtPath<MenuItemData>(GUIDToAssetPath(asset)));
+        }
+
+        defaultMenuItemData = assets.Select(a => LoadAssetAtPath<MenuItemData>(GUIDToAssetPath(a))).ToArray();
     }
 }
