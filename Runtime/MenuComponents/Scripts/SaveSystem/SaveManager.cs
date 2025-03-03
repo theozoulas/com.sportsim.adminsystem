@@ -102,12 +102,13 @@ namespace MenuComponents.SaveSystem
         /// <param name="id"></param>
         /// <param name="extraScoreData"></param>
         /// <returns>Returns true if found extra data</returns>
-        public static bool TryGetExtraScoreFromId(string id, out ExtraScoreData extraScoreData)
+        public static bool TryGetExtraScoreFromId(string id, out ScoreData extraScoreData)
         {
-            extraScoreData = ScoreDynamicMenu
+            extraScoreData = ExtraScoreDataMenu
                 .Instance
-                .extraScoreData
-                .FirstOrDefault(sd => sd.scoreID == id);
+                .ExtraScoreDataDic[id];
+            
+            Debug.Log(extraScoreData);
 
             return extraScoreData != null;
         }

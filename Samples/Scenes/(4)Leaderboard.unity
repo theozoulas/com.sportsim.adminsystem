@@ -335,7 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 61578b4e3ed35474d9e74d6ef2ba0e72, type: 2}
 --- !u!114 &176509797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: 8394e95f316b542409acf21f2bc7887c, type: 2}
 --- !u!1 &182567518
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.35830188, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -598,7 +596,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDataKey: Button
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &429796488
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 9bc7c0ef0db067f47a1e46330ab854b7, type: 2}
 --- !u!114 &429796493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,7 +758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: f81bbdcbef7ae3449ac14a6aa2945d29, type: 2}
 --- !u!1 &470532952
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,10 +835,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2076031912}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1080, y: 1920}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &488768868
 MonoBehaviour:
@@ -856,7 +853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -895,7 +892,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultDataKey: Background
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &714350704
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,9 +982,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &770695024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,9 +1074,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &814943034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,9 +1166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &819977766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,9 +1258,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &903184710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,7 +1312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c0cb7d4028a6d42be2d493fc3584f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logoDynamicData: {fileID: 11400000, guid: f61bd9fafab4bfb49a20aa4a76c47719, type: 2}
 --- !u!114 &903184713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,9 +1438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1201451562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,9 +1530,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1395586590
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,7 +1643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.35830188, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1678,8 +1681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultDataKey: Button
-  useCustomData: 0
-  customData: New Custom Menu Item Data
+  useCustomData: 1
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1430469919
 GameObject:
   m_ObjectHideFlags: 0
@@ -1768,9 +1772,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1729947650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,9 +2005,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1833291329
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,9 +2097,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1892698761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2405,7 +2412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 9bc7c0ef0db067f47a1e46330ab854b7, type: 2}
 --- !u!114 &1967340560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2418,7 +2424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: f81bbdcbef7ae3449ac14a6aa2945d29, type: 2}
 --- !u!1 &2027817318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2507,9 +2512,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Leaderboard Entry
+  defaultDataKey: LeaderboardEntry
   useCustomData: 0
-  customData: New Custom Menu Item Data
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &2040003276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,7 +2550,6 @@ MonoBehaviour:
   playerNameDataField: Name
   rankTextCustomMenuItem: {fileID: 11400000, guid: d8c1576bc2093354c8e8facbbdaf8ad1, type: 2}
   entryTextCustomMenuItem: {fileID: 11400000, guid: 61578b4e3ed35474d9e74d6ef2ba0e72, type: 2}
-  test: 1
 --- !u!4 &2040003278
 Transform:
   m_ObjectHideFlags: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322211168a545efa70b5406b2f9ca4d, type: 3}
+  m_Name: 5 LeaderboardEntry
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  defaultSprite: {fileID: 21300000, guid: b7468095bf99e944a95636857472f0ab, type: 3}
+  useCustomSprite: 0
+  customSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  spriteSize: {x: 753, y: 85}
+  useCustomSize: 0
+  customSpriteSize: {x: 1418.7, y: 67.5}
+  key: LeaderboardEntry
+  noDefaultSprite: 0
+  menuItemType: Leaderboard
+  groupData: []

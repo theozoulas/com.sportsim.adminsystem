@@ -41,17 +41,14 @@ namespace MenuComponents.DynamicSystem
                 { "UI Dynamic Data", BaseDynamicMenu.Instance, EditorIcons.GridBlocks },
                 { "UI Dynamic Data/Default", DefaultMenuItemTree.Instance },
                 { "UI Dynamic Data/Advanced", CustomMenuItemTree.Instance },
-                { "Text Colour", BaseDynamicMenu.Instance, EditorIcons.SpeechBubbleRound },
-                { "Text Font", BaseDynamicMenu.Instance, EditorIcons.PenAdd },
+                { "Text Dynamic Data", BaseDynamicMenu.Instance, SdfIconType.Type },
+                { "Text Dynamic Data/Default", DefaultTextItemTree.Instance },
+                { "Text Dynamic Data/Advanced", CustomTextItemTree.Instance },
                 { "Logos", BaseDynamicMenu.Instance, EditorIcons.Image },
                 { "Leaderboard", LeaderboardDynamicMenu.Instance, EditorIcons.List },
-                { "Score", ScoreDynamicMenu.Instance, EditorIcons.FinnishBanner }
+                { "Score", ScoreDynamicMenu.Instance, EditorIcons.FinnishBanner },
+                { "Score/Advanced", ExtraScoreDataMenu.Instance }
             };
-
-            tree.AddScriptableObjectsAtPath("Text Colour",
-                Resources.LoadAll<ScriptableObject>("AdminSystem/FontColourPallets"));
-
-            tree.AddScriptableObjectsAtPath("Text Font", Resources.LoadAll<ScriptableObject>("AdminSystem/FontData"));
 
             tree.AddScriptableObjectsAtPath("Logos", Resources.LoadAll<ScriptableObject>("AdminSystem/LogoImages"));
 

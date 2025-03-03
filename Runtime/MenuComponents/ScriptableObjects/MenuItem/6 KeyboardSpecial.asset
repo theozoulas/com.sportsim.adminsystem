@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4322211168a545efa70b5406b2f9ca4d, type: 3}
+  m_Name: 6 KeyboardSpecial
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  defaultSprite: {fileID: 21300000, guid: a497293d45f51814fa8e3c48062624a6, type: 3}
+  useCustomSprite: 0
+  customSprite: {fileID: 0}
+  spriteSize: {x: 495, y: 152}
+  useCustomSize: 0
+  customSpriteSize: {x: 0, y: 0}
+  key: KeyboardSpecial
+  noDefaultSprite: 1
+  menuItemType: 
+  groupData: []

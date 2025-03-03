@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using MenuComponents.Utility;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor.Examples;
 using Sirenix.Serialization;
@@ -13,7 +14,7 @@ using UnityEngine.Serialization;
 using static UnityEditor.AssetDatabase;
 
 
-[CreateAssetMenu(fileName = "dsfsdfs", menuName = "ScriptableObjects/dsfdsfsd", order = 1)] 
+[CreateAssetMenu(fileName = "dsfsdfs", menuName = "ScriptableObjects/dsfdsfsd", order = 1)]
 [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
 public class MenuItemData : ScriptableObject
 {
@@ -36,47 +37,50 @@ public class MenuItemData : ScriptableObject
     [OnInspectorGUI("DrawCustomPreview", append: true)]
     public Sprite customSprite;
 
-    [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [ReadOnly] [Title("Size Settings")]
+    [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
+    [ReadOnly]
+    [Title("Size Settings")]
+    [HideIf("@this.noDefaultSprite && !this.useCustomSprite")]
     public Vector2 spriteSize;
 
     [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
     public bool useCustomSize;
 
     [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [ShowIf("useCustomSize")]
+    [MinValue(1f)]
     public Vector2 customSpriteSize;
-
-    [HideInInlineEditors] public bool noDefaultSprite;
-
-    protected const string GUIPath =
-        "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal/";
 
     [HideInInlineEditors] public string key;
 
+    [HideInInlineEditors] public bool noDefaultSprite;
 
-    public MenuItemData(string key, Color color, bool noDefaultSprite)
-    {
-        this.key = key;
-        this.color = color;
-        this.noDefaultSprite = noDefaultSprite;
-    }
+    [HideInInlineEditors] public string menuItemType;
+
+    [HideInInlineEditors] [SerializeField] private GroupData[] groupData;
+
+    private const string GUIPath =
+        "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal/";
+
+    private Texture2D _previewTexture;
+
 
     protected virtual IEnumerable GetDefaultSprites()
     {
-        return (from asset in FindAssets("t:Sprite", new[] { GUIPath + "Button" })
+        return (from asset in FindAssets("t:Sprite", new[] { GUIPath + menuItemType })
             select GUIDToAssetPath(asset)
             into assetPath
             select LoadAssetAtPath<Sprite>(assetPath)
             into sprite
             let groupPath = GetValueDropdownGroup(
                 sprite.name,
-                new[] { "Large", "Small" }, new[] { "Outline", "Filled" })
+                groupData)
             select new ValueDropdownItem(groupPath + sprite.name, sprite)).Cast<object>();
     }
 
-    protected string GetValueDropdownGroup(string valueName, params string[][] group)
+    private string GetValueDropdownGroup(string valueName, GroupData[] group)
     {
         return (from groupArray in @group
-            from groupName in groupArray
+            from groupName in groupArray.groups
             where valueName.Contains(groupName)
             select groupName).Aggregate("", (current, groupName) => current + $"{groupName}/");
     }
@@ -85,30 +89,63 @@ public class MenuItemData : ScriptableObject
     {
         if (defaultSprite == null) return;
 
-        spriteSize = useCustomSize
-            ? customSpriteSize
-            : useCustomSprite
-                ? new Vector2Int(customSprite.texture.width, customSprite.texture.height)
-                : new Vector2Int(defaultSprite.texture.width, defaultSprite.texture.height);
+        var defaultTexture = defaultSprite.texture;
+        var customTexture = customSprite != null ? customSprite.texture : null;
 
+        spriteSize =
+            useCustomSize
+                ? customSpriteSize
+                : useCustomSprite && customTexture != null
+                    ? new Vector2Int(customTexture.width, customTexture.height)
+                    : new Vector2Int(defaultTexture.width, defaultTexture.height);
 
-        GUILayout.BeginVertical(GUI.skin.box);
-        GUILayout.Label(defaultSprite.texture, GUILayout.MaxHeight(100));
-        GUILayout.EndVertical();
+        DrawSpritePreviewGUI(defaultTexture);
     }
 
     private void DrawCustomPreview()
     {
         if (customSprite == null) return;
 
+        var customTexture = customSprite.texture;
+        var defaultTexture = defaultSprite.texture;
+
         spriteSize = useCustomSize
             ? customSpriteSize
             : useCustomSprite
-                ? new Vector2Int(customSprite.texture.width, customSprite.texture.height)
-                : new Vector2Int(defaultSprite.texture.width, defaultSprite.texture.height);
+                ? new Vector2Int(customTexture.width, customTexture.height)
+                : new Vector2Int(defaultTexture.width, defaultTexture.height);
+
+        DrawSpritePreviewGUI(customTexture);
+    }
+
+    private void DrawSpritePreviewGUI(Texture2D customTexture)
+    {
+        var constrainedSize = spriteSize.CalculateConstrainedSize(100, 500);
+
+        if (_previewTexture == null) _previewTexture = customTexture;
+        else if (_previewTexture.name != customTexture.name) _previewTexture = customTexture;
+
+        UpdatePreviewTexture(customTexture, constrainedSize);
 
         GUILayout.BeginVertical(GUI.skin.box);
-        GUILayout.Label(customSprite.texture, GUILayout.MaxHeight(100));
+        GUILayout.Label(_previewTexture,
+            GUILayout.Height(constrainedSize.y + 5),
+            GUILayout.Width(constrainedSize.x + 5));
         GUILayout.EndVertical();
+    }
+    
+    private void UpdatePreviewTexture(Texture2D texture, Vector2Int size)
+    {
+        if (!useCustomSize)
+        {
+            _previewTexture = texture;
+            return;
+        }
+
+        if (_previewTexture.GetSizeAsVector2Int() == size) return;
+
+        if (size.y <= 0 || size.x <= 0) return;
+
+        _previewTexture = texture.ResizeTexture(size);
     }
 }

@@ -19,19 +19,17 @@ namespace MenuComponents.Leaderboard
     public class LeaderboardManager : MonoBehaviour
     {
         [SerializeField] private Transform entryPrefab;
-        [SerializeField] private  GameObject leaderBoardPanel;
+        [SerializeField] private GameObject leaderBoardPanel;
         [SerializeField] private string playerNameDataField;
 
-        [FormerlySerializedAs("rankTextMenuItem")] [FormerlySerializedAs("rankTextColour")] [SerializeField] private CustomMenuItemData rankTextCustomMenuItem;
-        [FormerlySerializedAs("entryTextMenuItem")] [FormerlySerializedAs("entryTextColour")] [SerializeField] private CustomMenuItemData entryTextCustomMenuItem;
+        [SerializeField] private CustomMenuItemData rankTextCustomMenuItem;
+        [SerializeField] private CustomMenuItemData entryTextCustomMenuItem;
 
         private List<PlayerData> _playerDataList;
-        
-        private LeaderboardDataProvider _leaderboardDataProvider;
-        
-        private bool _isLoaded;
 
-        public int test = 1;
+        private LeaderboardDataProvider _leaderboardDataProvider;
+
+        private bool _isLoaded;
 
         private void Awake()
         {
@@ -114,9 +112,11 @@ namespace MenuComponents.Leaderboard
 
             if (playerDataList != null)
             {
-                var sortedPlayerDataList =
-                    playerDataList.OrderByDescending(data => data.Score).ToList();
-                
+                var sortedPlayerDataList = 
+                    (ScoreDynamicMenu.Instance.sortScoreBy == ScoreDynamicMenu.ScoreSort.Highest
+                    ? playerDataList.OrderByDescending(data => data.Score)
+                    : playerDataList.OrderBy(data => data.Score)).ToList();
+
                 return sortedPlayerDataList;
             }
 

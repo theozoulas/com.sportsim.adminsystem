@@ -7,19 +7,28 @@ using UnityEngine;
 // ReSharper disable All
 
 [CreateAssetMenu(fileName = "ScoreData", menuName = "ScriptableObjects/ScoreData", order = 1)]
+[InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
 public class ScoreData : SerializedScriptableObject
 {
-    [Title("Settings")]
+  
+    [TabGroup("$key/Item", "Settings", SdfIconType.GearFill)]
     [TypeFilter("GetFilteredTypeList")] public ScoreFormat Format = new DefaultFormat();
     
+    [TitleGroup("$key")] [TabGroup("$key/Item", "Settings", SdfIconType.Eyedropper)]
     public bool hasMinValue;
-    [ShowIf("hasMinValue")] public float minValue;
-
+    
+    [ShowIf("hasMinValue")][TabGroup("$key/Item", "Settings", SdfIconType.Eyedropper)] public float minValue;
+    
+    [TabGroup("$key/Item", "Settings", SdfIconType.Eyedropper)]
     public bool hasMaxValue;
-    [ShowIf("hasMaxValue")] public float maxValue;
+    
+    [ShowIf("hasMaxValue")][TabGroup("$key/Item", "Settings", SdfIconType.Eyedropper)]public float maxValue;
 
     public float Value { get; private set; }
     private bool _hasBeenSet;
+    
+    [HideInInlineEditors]
+    public string key;
 
     private void OnEnable()
     {
@@ -29,9 +38,9 @@ public class ScoreData : SerializedScriptableObject
     public IEnumerable<Type> GetFilteredTypeList()
     {
         var q = typeof(ScoreFormat).Assembly.GetTypes()
-            .Where(x => !x.IsAbstract) // Excludes BaseClass
-            .Where(x => !x.IsGenericTypeDefinition) // Excludes C1<>
-            .Where(x => typeof(ScoreFormat).IsAssignableFrom(x)); // Excludes classes not inheriting from BaseClass
+            .Where(x => !x.IsAbstract) 
+            .Where(x => !x.IsGenericTypeDefinition) 
+            .Where(x => typeof(ScoreFormat).IsAssignableFrom(x));
 
         return q;
     }

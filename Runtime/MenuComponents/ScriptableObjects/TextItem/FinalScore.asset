@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996d72a3b90f0cc4490277daf9cf35e2, type: 3}
+  m_Name: FinalScore
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  defaultFont: {fileID: 11400000, guid: 95397a272fc0ff1449a2f950a30eb07d, type: 2}
+  useCustomFont: 0
+  customFont: {fileID: 11400000, guid: ac7b8870c9a35244aab951085e47dcf3, type: 2}
+  useManualPreviewFont: 0
+  manualPreviewFont: {fileID: 12800000, guid: 4772ff568d9c2164999491f8fd82cce8, type: 3}
+  fontSize: 2
+  autoSizeData:
+    minSize: 18
+    maxSize: 291.2
+  autoSize: 1
+  middleAlignmentOptions: 3
+  key: FinalScore
+  groupData:
+  - groups:
+    - PublicSans
+    - Poppins

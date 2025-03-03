@@ -17,13 +17,11 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
         CustomRemoveElementFunction = "DeleteAsset")]
     [LabelText("  ")]
     public List<CustomMenuItemData> customMenuItemDynamicData;
-
-    [FormerlySerializedAs("newMenuItemDynamicData")]
+    
     [InlineEditor(InlineEditorObjectFieldModes.Hidden)]
     [BoxGroup("Create New Custom Menu Item Data", GroupID = "newItem")]
     public CustomMenuItemData newCustomMenuItemData;
-
-    [FormerlySerializedAs("newColourDynamicDataName")]
+    
     [PropertySpace(20)]
     [BoxGroup("Create New Custom Menu Item Data", GroupID = "newItem")]
     [LabelText("Name")]
@@ -38,13 +36,13 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
     [PropertySpace(20)]
     [InfoBox("Custom Menu Item Data Name Is Empty Or Already In Use!", InfoMessageType.Error, VisibleIf = "@_error")]
     [Button("Create", ButtonSizes.Large)]
-    [BoxGroup("Create New Menu Item Colour Data", GroupID = "newItem")]
+    [BoxGroup("Create New Menu Item Data", GroupID = "newItem")]
     private void CreateNewMenuItemDynamicData()
     {
         _error = false;
 
         if (AssetDatabase.LoadAssetAtPath<CustomMenuItemData>(
-                $"Assets/Resources/AdminSystem/ColourPallets/{newCustomMenuItemDataName}.asset") != null)
+                $"Assets/Resources/AdminSystem/MenuItemData/{newCustomMenuItemDataName}.asset") != null)
         {
             _error = true;
             return;
@@ -66,11 +64,11 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
         if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem"))
             AssetDatabase.CreateFolder("Assets/Resources", "AdminSystem");
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem/ColourPallets"))
-            AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", "ColourPallets");
+        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem/MenuItemData"))
+            AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", "MenuItemData");
 
         AssetDatabase.CreateAsset(newCustomMenuItemData,
-            $"Assets/Resources/AdminSystem/ColourPallets/{newCustomMenuItemDataName}.asset");
+            $"Assets/Resources/AdminSystem/MenuItemData/{newCustomMenuItemDataName}.asset");
         AssetDatabase.SaveAssets();
 
         customMenuItemDynamicData.Add(newCustomMenuItemData);
@@ -102,10 +100,11 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
     [OnInspectorInit]
     private void InspectorInit()
     {
-        customMenuItemDynamicData = Resources.LoadAll<CustomMenuItemData>("AdminSystem/ColourPallets").ToList();
+        customMenuItemDynamicData = Resources.LoadAll<CustomMenuItemData>("AdminSystem/MenuItemData").ToList();
 
         newCustomMenuItemData = CreateInstance<CustomMenuItemData>();
         newCustomMenuItemDataName = "New Custom Menu Item Data";
+        newCustomMenuItemData.defaultSprite = DefaultMenuItemTree.Instance.defaultItemData[0].defaultSprite;
 
         ResetError();
     }

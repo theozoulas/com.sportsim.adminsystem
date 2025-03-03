@@ -1550,6 +1550,7 @@ GameObject:
   - component: {fileID: 331492395582030988}
   - component: {fileID: 331492395582030990}
   - component: {fileID: 331492395582030989}
+  - component: {fileID: 331492395582030991}
   m_Layer: 5
   m_Name: BG_Image
   m_TagString: Untagged
@@ -1614,6 +1615,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331492395582030987}
   m_CullTransparentMesh: 0
+--- !u!114 &331492395582030991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331492395582030987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDataKey: Background
+  useCustomData: 0
+  customData: 
 --- !u!1 &331492395768074704
 GameObject:
   m_ObjectHideFlags: 0
