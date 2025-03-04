@@ -13,13 +13,13 @@ namespace MenuComponents.Utility
     {
         [SerializeField] private bool hideAtStart;
         [SerializeField] private bool playAtStart;
-    
+
         [SerializeField] private float fadeInDuration = 1;
         [SerializeField] private float fadeOutDuration = 1;
         [SerializeField] private float fadeShowDelay = 1;
-    
+
         private TMP_Text _text;
-        
+
         private WaitForSeconds _waitForFadeIn;
         private WaitForSeconds _waitForFadeOut;
         private WaitForSeconds _waitForShowDelay;
@@ -28,7 +28,7 @@ namespace MenuComponents.Utility
         private void Awake()
         {
             _text = GetComponent<TMP_Text>();
-            
+
             _waitForFadeIn = new WaitForSeconds(fadeInDuration);
             _waitForFadeOut = new WaitForSeconds(fadeOutDuration);
             _waitForShowDelay = new WaitForSeconds(fadeShowDelay);
@@ -36,8 +36,8 @@ namespace MenuComponents.Utility
 
         private void Start()
         {
-            if(hideAtStart) _text.alpha = 0;
-            if(playAtStart) StartCoroutine(FadeInOut());
+            if (hideAtStart) _text.alpha = 0;
+            if (playAtStart) StartCoroutine(FadeInOut());
         }
 
         /// <summary>
@@ -48,29 +48,30 @@ namespace MenuComponents.Utility
         public IEnumerator FadeInOutSetText(string text)
         {
             _text.SetText(text);
-            
+
             yield return StartCoroutine(FadeInOut());
         }
 
         /// <summary>
-        /// Coroutine <c>FadeInSetText</c> Only fades in the passed text.
+        /// Coroutine <c>FadeInSetText</c> Only fades in the text passed in the parameter.
         /// </summary>
         /// <param name="text"></param>
         [UsedImplicitly]
         public IEnumerator FadeInSetText(string text)
         {
             _text.SetText(text);
-            
+
             yield return StartCoroutine(FadeIn());
         }
 
         /// <summary>
         /// Coroutine <c>FadeInOut</c> Routine to fade in and out.
         /// </summary>
+        [UsedImplicitly]
         public IEnumerator FadeInOut()
         {
             _text.alpha = 0;
-            
+
             yield return StartCoroutine(FadeIn());
             yield return _waitForShowDelay;
             yield return StartCoroutine(FadeOut());
@@ -79,7 +80,8 @@ namespace MenuComponents.Utility
         /// <summary>
         /// Coroutine <c>FadeIn</c> Fades Text in.
         /// </summary>
-        private IEnumerator FadeIn()
+        [UsedImplicitly]
+        public IEnumerator FadeIn()
         {
             yield return _text.DOFade(1.0f, fadeInDuration);
             yield return _waitForFadeIn;
@@ -88,7 +90,8 @@ namespace MenuComponents.Utility
         /// <summary>
         /// Coroutine <c>FadeOut</c> Fades Text out.
         /// </summary>
-        private IEnumerator FadeOut()
+        [UsedImplicitly]
+        public IEnumerator FadeOut()
         {
             yield return _text.DOFade(0.0f, fadeOutDuration);
             yield return _waitForFadeOut;

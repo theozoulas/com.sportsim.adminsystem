@@ -7,7 +7,7 @@ namespace MenuComponents.Components.Keyboard
     /// </summary>
     internal abstract class Popup : MonoBehaviour
     {
-        protected static OnScreenKeyboard Keyboard => StaticManager.Keyboard;
+        protected static IKeyboard Keyboard => StaticManager.Keyboard;
         protected static bool IsOnScreenKeyboardActive => Keyboard != null;
 
         private bool _initialized;
@@ -15,12 +15,12 @@ namespace MenuComponents.Components.Keyboard
         
         private void Awake()
         {
-            StaticManager.onKeyboardAdded += SetKeyboardListener;
+            StaticManager.OnKeyboardAdded += SetKeyboardListener;
         }
 
         private void OnDestroy()
         {
-            StaticManager.onKeyboardAdded -= SetKeyboardListener;
+            StaticManager.OnKeyboardAdded -= SetKeyboardListener;
         }
 
         private void OnEnable()

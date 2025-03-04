@@ -45,7 +45,7 @@ public class OnScreenKeyboard : MonoBehaviour
 
     private void Awake()
     {
-        StaticManager.ReferenceKeyboard(this);
+        //StaticManager.ReferenceKeyboard(this);
     }
 
     private void OnDisable()

@@ -23,9 +23,9 @@ namespace MenuComponents.Components.Keyboard
             if (!IsOnScreenKeyboardActive) return;
 
             _button = GetComponent<Button>();
-            _button.onClick.RemoveListener(delegate { Keyboard.WriteSpecialKey(3); });
+            _button.onClick.RemoveListener(Keyboard.Hide);
 
-            _button.onClick.AddListener(delegate { Keyboard.WriteSpecialKey(3); });
+            _button.onClick.AddListener(Keyboard.Hide);
         }
     }
 }
