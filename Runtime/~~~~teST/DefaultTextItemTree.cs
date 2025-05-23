@@ -6,10 +6,14 @@ using Sirenix.OdinInspector;
 using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif    
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class DefaultTextItemTree : GlobalConfig<DefaultTextItemTree>
 {
+#if UNITY_EDITOR
     [Title("Default Text Item Data")] [ListDrawerSettings(IsReadOnly = true, ShowFoldout = false)] [LabelText("  ")]
     public TextItemData[] defaultItemData;
 
@@ -38,4 +42,5 @@ public class DefaultTextItemTree : GlobalConfig<DefaultTextItemTree>
 
         defaultItemData = items.Select(a => LoadAssetAtPath<TextItemData>(GUIDToAssetPath(a))).ToArray();
     }
+#endif    
 }

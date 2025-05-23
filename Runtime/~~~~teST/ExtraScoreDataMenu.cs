@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class ExtraScoreDataMenu : GlobalConfig<ExtraScoreDataMenu>
 {
     [Title("Extra Score Data")]
@@ -28,9 +29,11 @@ public class ExtraScoreDataMenu : GlobalConfig<ExtraScoreDataMenu>
     public string newExtraScoreDataName;
 
     [UsedImplicitly] private bool _error;
-
+    
     public Dictionary<string, ScoreData> ExtraScoreDataDic =>
         ExtraScoreData.ToDictionary(sd => sd.key, sd => sd);
+    
+#if UNITY_EDITOR
 
     [PropertySpace(20)]
     [InfoBox("Extra Score Data Name Is Empty Or Already In Use!", InfoMessageType.Error, VisibleIf = "@_error")]
@@ -103,9 +106,6 @@ public class ExtraScoreDataMenu : GlobalConfig<ExtraScoreDataMenu>
 
         newExtraScoreData = CreateInstance<ScoreData>();
         newExtraScoreDataName = "New Extra Score Data";
-        var textItemData = DefaultTextItemTree.Instance.defaultItemData[0];
-        //newCustomTextItemData.defaultFont = textItemData.defaultFont;
-        //newCustomTextItemData.groupData = textItemData.groupData;
 
         ResetError();
     }
@@ -114,4 +114,6 @@ public class ExtraScoreDataMenu : GlobalConfig<ExtraScoreDataMenu>
     {
         _error = false;
     }
+    
+#endif
 }

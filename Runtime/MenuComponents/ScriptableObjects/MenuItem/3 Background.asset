@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4322211168a545efa70b5406b2f9ca4d, type: 3}
   m_Name: 3 Background
   m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 1}
+  colour: {r: 0, g: 0, b: 0, a: 1}
   defaultSprite: {fileID: 21300000, guid: a497293d45f51814fa8e3c48062624a6, type: 3}
   useCustomSprite: 0
   customSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MenuComponents.DynamicSystem;
 using MenuComponents.SaveSystem;
 using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using static LeaderboardDynamicMenu;
 using Object = System.Object;
 
 namespace MenuComponents.Leaderboard
@@ -21,9 +19,7 @@ namespace MenuComponents.Leaderboard
         [SerializeField] private Transform entryPrefab;
         [SerializeField] private GameObject leaderBoardPanel;
         [SerializeField] private string playerNameDataField;
-
-        [SerializeField] private CustomMenuItemData rankTextCustomMenuItem;
-        [SerializeField] private CustomMenuItemData entryTextCustomMenuItem;
+        
 
         private List<PlayerData> _playerDataList;
 
@@ -92,9 +88,9 @@ namespace MenuComponents.Leaderboard
             var nameField = newEntry.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             var scoreField = newEntry.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
-            rankField.color = rankTextCustomMenuItem.colour;
-            nameField.color = entryTextCustomMenuItem.colour;
-            scoreField.color = entryTextCustomMenuItem.colour;
+            rankField.color = Color.white;
+            nameField.color = Color.white;
+            scoreField.color = Color.white;
 
             rankField.text = (i + 1).ToString();
             nameField.text = playerData.GetDataFieldValueByName(playerNameDataField);

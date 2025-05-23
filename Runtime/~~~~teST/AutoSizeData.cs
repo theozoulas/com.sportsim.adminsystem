@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using Sirenix.OdinInspector;
 
 [Serializable]
@@ -13,3 +14,4 @@ public class AutoSizeData
     [MinValue("minSize")]
     public float maxSize = 72;
 }
+#endif   

@@ -557,14 +557,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35830188, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.93730223, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a497293d45f51814fa8e3c48062624a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b56fdf1766b7844d90c7bde73828ec2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1273,7 +1273,7 @@ GameObject:
   - component: {fileID: 903184711}
   - component: {fileID: 903184714}
   - component: {fileID: 903184713}
-  - component: {fileID: 903184712}
+  - component: {fileID: 903184715}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1300,18 +1300,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 780}
   m_SizeDelta: {x: 850, y: 197}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &903184712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903184710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c0cb7d4028a6d42be2d493fc3584f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &903184713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1332,7 +1320,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe44347402703e54ab866084a982eccd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48f5d49f59b60c54f94109dc74071a1a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1350,6 +1338,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 903184710}
   m_CullTransparentMesh: 0
+--- !u!114 &903184715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 903184710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c853f9f28ad3146a7eb4ce9e4a475c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDataKey: Main Logo
+  useCustomData: 0
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1164987070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,14 +1647,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.35830188, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.93730223, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a497293d45f51814fa8e3c48062624a6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b56fdf1766b7844d90c7bde73828ec2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2548,8 +2552,6 @@ MonoBehaviour:
   entryPrefab: {fileID: 1975005784487834894, guid: f0798390cce486644972b4c886a57cc1, type: 3}
   leaderBoardPanel: {fileID: 1958475088}
   playerNameDataField: Name
-  rankTextCustomMenuItem: {fileID: 11400000, guid: d8c1576bc2093354c8e8facbbdaf8ad1, type: 2}
-  entryTextCustomMenuItem: {fileID: 11400000, guid: 61578b4e3ed35474d9e74d6ef2ba0e72, type: 2}
 --- !u!4 &2040003278
 Transform:
   m_ObjectHideFlags: 0

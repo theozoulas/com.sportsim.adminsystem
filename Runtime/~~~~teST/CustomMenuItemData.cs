@@ -1,28 +1,28 @@
 ﻿using System.Collections;
 using System.Linq;
+using MenuComponents.Utility;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif    
 
 namespace MenuComponents.DynamicSystem
 {
     [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
     public class CustomMenuItemData : ScriptableObject
     {
-        [ReadOnly]
-        [HideInInlineEditors]
-        public string key;
+        [ReadOnly] [HideInInlineEditors] public string key;
 
         [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
         public Color colour = Color.white;
-        
+
         [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
         public bool useCustomSprite;
-        
-        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
-        [HideIf("useCustomSprite")]
+
+        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [HideIf("useCustomSprite")]
         public bool useDefaultSprite;
         
         [TabGroup("$key/Item", "Sprite")]
@@ -38,23 +38,29 @@ namespace MenuComponents.DynamicSystem
         [OnInspectorGUI("DrawCustomPreview", append: true)]
         public Sprite customSprite;
 
-        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [ReadOnly] [Title("Size Settings")]
-        [ShowIf("@this.useDefaultSprite || this.useCustomSprite")]
+        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
+        [ReadOnly]
+        [Title("Size Settings")]
+        [ShowIf("@(this.useDefaultSprite || this.useCustomSprite) && !this.IsCustomSpriteNull")]
         public Vector2 spriteSize;
 
-        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
-        [ShowIf("@this.useDefaultSprite || this.useCustomSprite")]
+        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] [ShowIf("@this.useDefaultSprite || this.useCustomSprite")]
         public bool useCustomSize;
 
-        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)] 
+        [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
         [ShowIf("@(this.useDefaultSprite || this.useCustomSprite) && this.useCustomSize")]
         public Vector2 customSpriteSize;
-        
+
         private bool _noDefaultSprite;
-        
+
         private const string GUIPath =
             "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal";
-        
+
+        private Texture2D _previewTexture;
+
+        private bool IsCustomSpriteNull => customSprite == null;
+
+#if UNITY_EDITOR
         private IEnumerable GetDefaultSprites()
         {
             return (from asset in FindAssets("t:Sprite", new[] { GUIPath })
@@ -69,7 +75,7 @@ namespace MenuComponents.DynamicSystem
                     new[] { "Outline", "Filled" })
                 select new ValueDropdownItem(groupPath + sprite.name, sprite)).Cast<object>();
         }
-
+#endif    
         private string GetValueDropdownGroup(string valueName, params string[][] group)
         {
             return (from groupArray in @group
@@ -80,33 +86,66 @@ namespace MenuComponents.DynamicSystem
 
         private void DrawDefaultPreview()
         {
-            if (defaultSprite == null || !useDefaultSprite) return;
+            if (defaultSprite == null) return;
+
+            var defaultTexture = defaultSprite.texture;
+            var customTexture = !IsCustomSpriteNull ? customSprite.texture : null;
+
+            spriteSize =
+                useCustomSize
+                    ? customSpriteSize
+                    : useCustomSprite && customTexture != null
+                        ? new Vector2Int(customTexture.width, customTexture.height)
+                        : new Vector2Int(defaultTexture.width, defaultTexture.height);
+
+            DrawSpritePreviewGUI(defaultTexture);
+        }
+
+        private void DrawCustomPreview()
+        {
+            if (IsCustomSpriteNull) return;
+
+            var customTexture = customSprite.texture;
+            var defaultTexture = defaultSprite.texture;
 
             spriteSize = useCustomSize
                 ? customSpriteSize
-                    : new Vector2(defaultSprite.texture.width, defaultSprite.texture.height);
+                : useCustomSprite
+                    ? new Vector2Int(customTexture.width, customTexture.height)
+                    : new Vector2Int(defaultTexture.width, defaultTexture.height);
 
+            DrawSpritePreviewGUI(customTexture);
+        }
+
+        private void DrawSpritePreviewGUI(Texture2D customTexture)
+        {
+            var constrainedSize = spriteSize.CalculateConstrainedSize(100, 500);
+
+            if (_previewTexture == null) _previewTexture = customTexture;
+            else if (_previewTexture.name != customTexture.name) _previewTexture = customTexture;
+
+            UpdatePreviewTexture(customTexture, constrainedSize);
 
             GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label(defaultSprite.texture, GUILayout.MaxHeight(100), GUILayout.MaxWidth(555));
+            GUILayout.Label(_previewTexture,
+                GUILayout.Height(constrainedSize.y + 5),
+                GUILayout.Width(constrainedSize.x + 5));
             GUILayout.EndVertical();
         }
-        
-        private void DrawCustomPreview()
+
+        private void UpdatePreviewTexture(Texture2D texture, Vector2Int size)
         {
-            if (customSprite == null)
+            if (!useCustomSize)
             {
-                spriteSize = Vector2.zero;
+                _previewTexture = texture;
                 return;
             }
 
-            spriteSize = useCustomSize
-                ? customSpriteSize
-                :  new Vector2(customSprite.texture.width, customSprite.texture.height);
+            if (_previewTexture.GetSizeAsVector2Int() == size) return;
 
-            GUILayout.BeginVertical(GUI.skin.box);
-            GUILayout.Label(customSprite.texture, GUILayout.MaxHeight(100), GUILayout.MaxWidth(300));
-            GUILayout.EndVertical();
+            if (size.y <= 0 || size.x <= 0) return;
+
+            _previewTexture = texture.ResizeTexture(size);
         }
     }
 }

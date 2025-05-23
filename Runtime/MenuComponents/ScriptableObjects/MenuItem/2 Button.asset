@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4322211168a545efa70b5406b2f9ca4d, type: 3}
   m_Name: 2 Button
   m_EditorClassIdentifier: 
-  color: {r: 0.35830188, g: 1, b: 0, a: 1}
-  defaultSprite: {fileID: 21300000, guid: a497293d45f51814fa8e3c48062624a6, type: 3}
+  colour: {r: 1, g: 0.93730223, b: 0, a: 1}
+  defaultSprite: {fileID: 21300000, guid: 1b56fdf1766b7844d90c7bde73828ec2, type: 3}
   useCustomSprite: 0
-  customSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  customSprite: {fileID: 21300000, guid: 722abb944646bbb4594d95cb3c5cfc6d, type: 3}
   spriteSize: {x: 495, y: 152}
   useCustomSize: 0
-  customSpriteSize: {x: 75.8, y: 41.4}
+  customSpriteSize: {x: 300, y: 300}
   key: Button
   noDefaultSprite: 0
   menuItemType: Button

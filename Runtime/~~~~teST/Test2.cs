@@ -14,7 +14,7 @@ public class Test2 : MonoBehaviour
         GetComponent<Button>().onClick.AddListener( () =>
         {
             SaveManager.UpdateStaticScore(scoreManager.Score);
-            SaveManager.UpdateExtraScoreData("Reaction Speed", scoreManager.Score / 30f);
+            SaveManager.UpdateExtraScoreData("Reaction Speed", 30f /scoreManager.Score);
             SceneManager.LoadScene(gameObject.scene.buildIndex + 1);
         });
     }

@@ -5,14 +5,10 @@ using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class LeaderboardDynamicMenu : GlobalConfig<LeaderboardDynamicMenu>
 {
-    public enum LeaderboardDataProviders
-    {
-        SaveSystem,
-        Online
-    }
+    
 
     [EnumToggleButtons] public LeaderboardDataProviders dataProviderType;
 
@@ -20,4 +16,10 @@ public class LeaderboardDynamicMenu : GlobalConfig<LeaderboardDynamicMenu>
     public string url;
 
     public string[] extraDataEntriesToShow;
+}
+
+public enum LeaderboardDataProviders
+{
+    SaveSystem,
+    Online
 }

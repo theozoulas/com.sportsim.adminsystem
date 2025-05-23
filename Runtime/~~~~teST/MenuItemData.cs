@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections;
 using System.Linq;
-using System.Runtime.Serialization;
 using MenuComponents.Utility;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Examples;
-using Sirenix.Serialization;
-using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.Serialization;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif   
 
 
 [CreateAssetMenu(fileName = "dsfsdfs", menuName = "ScriptableObjects/dsfdsfsd", order = 1)]
@@ -19,7 +13,7 @@ using static UnityEditor.AssetDatabase;
 public class MenuItemData : ScriptableObject
 {
     [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
-    public Color color;
+    public Color colour = Color.white;
 
     [TabGroup("$key/Item", "Sprite")]
     [OnInspectorGUI("DrawDefaultPreview", append: true)]
@@ -40,7 +34,7 @@ public class MenuItemData : ScriptableObject
     [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
     [ReadOnly]
     [Title("Size Settings")]
-    [HideIf("@this.noDefaultSprite && !this.useCustomSprite")]
+    [HideIf("@(this.noDefaultSprite && !this.useCustomSprite) || this.IsCustomSpriteNull")]
     public Vector2 spriteSize;
 
     [TabGroup("$key/Item", "Sprite", SdfIconType.Image)]
@@ -62,8 +56,10 @@ public class MenuItemData : ScriptableObject
         "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal/";
 
     private Texture2D _previewTexture;
+    
+    private bool IsCustomSpriteNull => customSprite == null;
 
-
+#if UNITY_EDITOR
     protected virtual IEnumerable GetDefaultSprites()
     {
         return (from asset in FindAssets("t:Sprite", new[] { GUIPath + menuItemType })
@@ -76,6 +72,7 @@ public class MenuItemData : ScriptableObject
                 groupData)
             select new ValueDropdownItem(groupPath + sprite.name, sprite)).Cast<object>();
     }
+#endif   
 
     private string GetValueDropdownGroup(string valueName, GroupData[] group)
     {
@@ -90,7 +87,7 @@ public class MenuItemData : ScriptableObject
         if (defaultSprite == null) return;
 
         var defaultTexture = defaultSprite.texture;
-        var customTexture = customSprite != null ? customSprite.texture : null;
+        var customTexture = !IsCustomSpriteNull? customSprite.texture : null;
 
         spriteSize =
             useCustomSize
@@ -104,7 +101,7 @@ public class MenuItemData : ScriptableObject
 
     private void DrawCustomPreview()
     {
-        if (customSprite == null) return;
+        if (IsCustomSpriteNull) return;
 
         var customTexture = customSprite.texture;
         var defaultTexture = defaultSprite.texture;

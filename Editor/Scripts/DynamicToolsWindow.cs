@@ -25,7 +25,7 @@ namespace MenuComponents.DynamicSystem
         private static void OpenWindow()
         {
             var window = GetWindow<DynamicToolsWindow>();
-            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(800, 600);
+            window.position = GUIHelper.GetEditorWindowRect().AlignCenter(1000, 800);
         }
 
         /// <summary>
@@ -38,19 +38,25 @@ namespace MenuComponents.DynamicSystem
             {
                 { "Home", this, EditorIcons.House },
                 { "Data Entry", DataEntryDynamicMenu.Instance, EditorIcons.File },
+                { "Data Entry/UI Settings/Default", DefaultDataEntryItemTree.Instance },
+                { "Data Entry/UI Settings/Custom", CustomDataEntryItemTree.Instance },
+                { "Data Entry/Data Entry Inputs/Default", DefaultDataEntryInputTree.Instance },
                 { "UI Dynamic Data", BaseDynamicMenu.Instance, EditorIcons.GridBlocks },
                 { "UI Dynamic Data/Default", DefaultMenuItemTree.Instance },
-                { "UI Dynamic Data/Advanced", CustomMenuItemTree.Instance },
+                { "UI Dynamic Data/Custom", CustomMenuItemTree.Instance },
                 { "Text Dynamic Data", BaseDynamicMenu.Instance, SdfIconType.Type },
                 { "Text Dynamic Data/Default", DefaultTextItemTree.Instance },
-                { "Text Dynamic Data/Advanced", CustomTextItemTree.Instance },
-                { "Logos", BaseDynamicMenu.Instance, EditorIcons.Image },
+                { "Text Dynamic Data/Custom", CustomTextItemTree.Instance },
+                { "Logo Dynamic Data", BaseDynamicMenu.Instance, EditorIcons.Image },
+                { "Logo Dynamic Data/Default", DefaultLogoTree.Instance },
+                { "Logo Dynamic Data/Custom", CustomLogoTree.Instance },
                 { "Leaderboard", LeaderboardDynamicMenu.Instance, EditorIcons.List },
                 { "Score", ScoreDynamicMenu.Instance, EditorIcons.FinnishBanner },
-                { "Score/Advanced", ExtraScoreDataMenu.Instance }
+                { "Score/Custom", ExtraScoreDataMenu.Instance }
             };
-
-            tree.AddScriptableObjectsAtPath("Logos", Resources.LoadAll<ScriptableObject>("AdminSystem/LogoImages"));
+            
+            
+            
 
 
             return tree;
@@ -63,40 +69,6 @@ namespace MenuComponents.DynamicSystem
             if (CustomMenuItemTree.Instance.newCustomMenuItemData == null) return;
             
             DestroyImmediate(CustomMenuItemTree.Instance.newCustomMenuItemData);
-        }
-
-        [Button(50)]
-        private void Setup()
-        {
-            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-                AssetDatabase.CreateFolder("Assets", "Resources");
-
-            if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem"))
-                AssetDatabase.CreateFolder("Assets/Resources", "AdminSystem");
-
-            foreach (var folder in AssetDatabase.GetSubFolders(
-                         "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/DynamicScriptableObjects"))
-            {
-                var folderName = Path.GetFileName(folder);
-
-                if (!AssetDatabase.IsValidFolder($"Assets/Resources/AdminSystem/{folderName}"))
-                    AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", folderName);
-
-                foreach (var asset in AssetDatabase.FindAssets("t:ScriptableObject",
-                             new[]
-                             {
-                                 $"Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/DynamicScriptableObjects/{folderName}"
-                             }))
-                {
-                    var assetPath = AssetDatabase.GUIDToAssetPath(asset);
-
-                    AssetDatabase.CopyAsset(assetPath,
-                        $"Assets/Resources/AdminSystem/{folderName}/{Path.GetFileName(assetPath)}");
-                }
-            }
-
-            if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem/ColourPallets"))
-                AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", "ColourPallets");
         }
     }
 }

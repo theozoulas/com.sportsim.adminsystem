@@ -12,18 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996d72a3b90f0cc4490277daf9cf35e2, type: 3}
   m_Name: FinalScore
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 1, b: 1, a: 1}
-  defaultFont: {fileID: 11400000, guid: 95397a272fc0ff1449a2f950a30eb07d, type: 2}
+  colour: {r: 1, g: 1, b: 1, a: 1}
+  defaultFont: {fileID: 11400000, guid: 23dfe582761a0f44fb040ee5dc720f8c, type: 2}
   useCustomFont: 0
-  customFont: {fileID: 11400000, guid: ac7b8870c9a35244aab951085e47dcf3, type: 2}
+  customFont: {fileID: 11400000, guid: 357829f6613415245b2c7df34129c19a, type: 2}
   useManualPreviewFont: 0
-  manualPreviewFont: {fileID: 12800000, guid: 4772ff568d9c2164999491f8fd82cce8, type: 3}
+  manualPreviewFont: {fileID: 12800000, guid: 63e92b03fc6829c478903e7fd78d96a2, type: 3}
   fontSize: 2
   autoSizeData:
     minSize: 18
     maxSize: 291.2
   autoSize: 1
-  middleAlignmentOptions: 3
+  fontStyle: 0
+  fontCase: 0
+  spacingOptions:
+    character: 0
+    word: 0
+    line: 0
+    paragraph: 0
+  alignment: 1
+  middleAlignmentOptions: 5
   key: FinalScore
   groupData:
   - groups:

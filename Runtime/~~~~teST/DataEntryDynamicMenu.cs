@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using UnityEngine;
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class DataEntryDynamicMenu : GlobalConfig<DataEntryDynamicMenu>
 {
     [Title("View Player Data Settings")]
@@ -15,7 +14,7 @@ public class DataEntryDynamicMenu : GlobalConfig<DataEntryDynamicMenu>
     public bool enableExtraField2;
     [ShowIf("enableExtraField2")]
     public string extraField2;
-
+    
     public IEnumerable<string> GetExtraFields()
     {
         var extraFields = new List<string>();

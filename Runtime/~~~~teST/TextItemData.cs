@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +5,10 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif   
 using Object = UnityEngine.Object;
 
 [CreateAssetMenu(fileName = "text", menuName = "ScriptableObjects/text", order = 1)]
@@ -14,7 +16,7 @@ using Object = UnityEngine.Object;
 public class TextItemData : ScriptableObject
 {
     [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
-    public Color color;
+    public Color colour = Color.white;
 
     [TabGroup("$key/Item", "Font")]
     [OnInspectorGUI("DrawDefaultPreview", append: true)]
@@ -25,10 +27,10 @@ public class TextItemData : ScriptableObject
         "Could Not Find Associated Font from TMP_FontAsset, Make sure That the Original Font File Is With the TMP_FontAsset!",
         InfoMessageType.Warning, VisibleIf = "_noPreviewFontFound")]
     [HideLabel]
-    [Title("Default Sprite Settings")]
+    [Title("Default Font Settings")]
     public TMP_FontAsset defaultFont;
 
-    [TabGroup("$key/Item", "Font", SdfIconType.Type)] [Title("Custom Sprite Settings")]
+    [TabGroup("$key/Item", "Font", SdfIconType.Type)] [Title("Custom Font Settings")]
     public bool useCustomFont;
 
     [TabGroup("$key/Item", "Font")] [ShowIf("useCustomFont")]
@@ -53,6 +55,18 @@ public class TextItemData : ScriptableObject
     public AutoSizeData autoSizeData;
 
     [TabGroup("$key/Item", "Font")] public bool autoSize;
+
+    [EnumToggleButtons] [HideLabel] [Title("Font Style Settings")] [TabGroup("$key/Item", "Font")]
+    public FontStyles fontStyle;
+    
+    [EnumToggleButtons] [HideLabel] [Title("Font Case Settings")] [TabGroup("$key/Item", "Font")]
+    public FontCases fontCase = FontCases.Default;
+
+    [TabGroup("$key/Item", "Font")] [Title("Spacing Settings (em)")] [HideLabel]
+    public FontSpacingOptions spacingOptions;
+
+    [EnumToggleButtons] [HideLabel] [Title("Alignment Settings")] [TabGroup("$key/Item", "Font")]
+    public Alignment alignment = Alignment.Center; 
     
     [EnumToggleButtons] [HideLabel] [Title("Middle Alignment Settings")]
     [TabGroup("$key/Item", "Font")] 
@@ -71,15 +85,7 @@ public class TextItemData : ScriptableObject
 
     private bool _wasUsingCustomFont;
     
-
-    public enum MiddleAlignment
-    {
-        Middle,
-        Baseline,
-        Midline,
-        Capline
-    }
-
+#if UNITY_EDITOR
     protected virtual IEnumerable GetDefaultFonts()
     {
         return (from asset in FindAssets("t:TMP_FontAsset", new[] { GUIPath })
@@ -92,6 +98,18 @@ public class TextItemData : ScriptableObject
                 groupData)
             select new ValueDropdownItem(groupPath + fontAsset.name, fontAsset)).Cast<object>();
     }
+    
+    private static bool TryGetFontFromTmpFontAsset(Object tmpFontAsset, out Font font)
+    {
+        font = FindAssets("t:Font", new[] { GUIPath })
+            .Select(GUIDToAssetPath).Select(LoadAssetAtPath<Font>)
+            .FirstOrDefault(f => tmpFontAsset.name.Contains(f.name));
+
+        return font != null;
+    }
+
+    
+   
 
     private static string GetValueDropdownGroup(string valueName, IEnumerable<GroupData> group)
     {
@@ -209,15 +227,7 @@ public class TextItemData : ScriptableObject
 
         EditorGUI.LabelField(textRect, exampleText, style);
     }
-
-    private static bool TryGetFontFromTmpFontAsset(Object tmpFontAsset, out Font font)
-    {
-        font = FindAssets("t:Font", new[] { GUIPath })
-            .Select(GUIDToAssetPath).Select(LoadAssetAtPath<Font>)
-            .FirstOrDefault(f => tmpFontAsset.name.Contains(f.name));
-
-        return font != null;
-    }
+    
 
     private static bool TryGetFontInAssetDataBase(string tmpFontName, out Font font)
     {
@@ -236,4 +246,6 @@ public class TextItemData : ScriptableObject
 
         return true;
     }
+    
+#endif   
 }

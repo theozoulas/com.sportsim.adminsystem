@@ -8,7 +8,12 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+#if UNITY_EDITOR
+using static UnityEditor.AssetDatabase;
+#endif   
 
+
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
 {
     [Title("Custom Menu Item Data")]
@@ -32,6 +37,8 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
 
     public Dictionary<string, CustomMenuItemData> CustomMenuItemDataDic =>
         customMenuItemDynamicData.ToDictionary(cd => cd.key, cd => cd);
+    
+#if UNITY_EDITOR
 
     [PropertySpace(20)]
     [InfoBox("Custom Menu Item Data Name Is Empty Or Already In Use!", InfoMessageType.Error, VisibleIf = "@_error")]
@@ -41,7 +48,7 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
     {
         _error = false;
 
-        if (AssetDatabase.LoadAssetAtPath<CustomMenuItemData>(
+        if (LoadAssetAtPath<CustomMenuItemData>(
                 $"Assets/Resources/AdminSystem/MenuItemData/{newCustomMenuItemDataName}.asset") != null)
         {
             _error = true;
@@ -58,18 +65,18 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
 
         newCustomMenuItemData.key = newCustomMenuItemDataName;
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-            AssetDatabase.CreateFolder("Assets", "Resources");
+        if (!IsValidFolder("Assets/Resources"))
+            CreateFolder("Assets", "Resources");
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem"))
-            AssetDatabase.CreateFolder("Assets/Resources", "AdminSystem");
+        if (!IsValidFolder("Assets/Resources/AdminSystem"))
+            CreateFolder("Assets/Resources", "AdminSystem");
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem/MenuItemData"))
-            AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", "MenuItemData");
+        if (!IsValidFolder("Assets/Resources/AdminSystem/MenuItemData"))
+            CreateFolder("Assets/Resources/AdminSystem", "MenuItemData");
 
-        AssetDatabase.CreateAsset(newCustomMenuItemData,
+        CreateAsset(newCustomMenuItemData,
             $"Assets/Resources/AdminSystem/MenuItemData/{newCustomMenuItemDataName}.asset");
-        AssetDatabase.SaveAssets();
+        SaveAssets();
 
         customMenuItemDynamicData.Add(newCustomMenuItemData);
 
@@ -93,8 +100,8 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
     {
         customMenuItemDynamicData.Remove(asset as CustomMenuItemData);
 
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(asset));
-        AssetDatabase.SaveAssets();
+        AssetDatabase.DeleteAsset(GetAssetPath(asset));
+        SaveAssets();
     }
 
     [OnInspectorInit]
@@ -113,4 +120,6 @@ public class CustomMenuItemTree : GlobalConfig<CustomMenuItemTree>
     {
         _error = false;
     }
+    
+#endif   
 }

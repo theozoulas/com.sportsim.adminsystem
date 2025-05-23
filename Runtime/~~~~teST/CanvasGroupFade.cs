@@ -32,7 +32,11 @@ public class CanvasGroupFade : MonoBehaviour
 
     private void Start()
     {
-        if (hideAtStart) _canvasGroup.alpha = 0;
+        if (hideAtStart)
+        {
+            _canvasGroup.alpha = 0;
+            _canvasGroup.blocksRaycasts = false;
+        }
         if (playAtStart) StartCoroutine(FadeInOut());
     }
 
@@ -56,6 +60,7 @@ public class CanvasGroupFade : MonoBehaviour
     public IEnumerator FadeIn()
     {
         yield return _canvasGroup.DOFade(1.0f, fadeInDuration);
+        _canvasGroup.blocksRaycasts = true;
         yield return _waitForFadeIn;
     }
 
@@ -65,6 +70,7 @@ public class CanvasGroupFade : MonoBehaviour
     [UsedImplicitly]
     public IEnumerator FadeOut()
     {
+        _canvasGroup.blocksRaycasts = false;
         yield return _canvasGroup.DOFade(0.0f, fadeOutDuration);
         yield return _waitForFadeOut;
     }

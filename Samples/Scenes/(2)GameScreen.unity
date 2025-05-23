@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 1330456983}
   - component: {fileID: 1330456986}
   - component: {fileID: 1330456985}
-  - component: {fileID: 1330456984}
+  - component: {fileID: 1330456987}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -806,19 +806,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 780}
   m_SizeDelta: {x: 850, y: 197}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1330456984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330456982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c0cb7d4028a6d42be2d493fc3584f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logoDynamicData: {fileID: 11400000, guid: f61bd9fafab4bfb49a20aa4a76c47719, type: 2}
 --- !u!114 &1330456985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,7 +826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe44347402703e54ab866084a982eccd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48f5d49f59b60c54f94109dc74071a1a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -857,6 +844,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330456982}
   m_CullTransparentMesh: 0
+--- !u!114 &1330456987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330456982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c853f9f28ad3146a7eb4ce9e4a475c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDataKey: Main Logo
+  useCustomData: 0
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1449758247
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,6 +1633,7 @@ MonoBehaviour:
   defaultDataKey: Background
   useCustomData: 0
   customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &331492395768074704
 GameObject:
   m_ObjectHideFlags: 0

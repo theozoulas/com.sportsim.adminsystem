@@ -6,47 +6,51 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif    
 
 [InlineEditor(ObjectFieldMode = InlineEditorObjectFieldModes.Hidden)]
 public class CustomTextItemData : ScriptableObject
 {
-    [ReadOnly]
-    [HideInInlineEditors]
-    public string key;
+    [ReadOnly] [HideInInlineEditors] public string key;
+
+    [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
+    public Color colour = Color.white;
     
-   [TitleGroup("$key")] [TabGroup("$key/Item", "Colour", SdfIconType.Eyedropper)]
-    public Color color;
+    [TabGroup("$key/Item", "Font", SdfIconType.Image)] [HideIf("useCustomFont")]
+    public bool useDefaultFont;
+    
+    [TabGroup("$key/Item", "Font", SdfIconType.Type)] 
+    public bool useCustomFont;
 
     [TabGroup("$key/Item", "Font")]
     [OnInspectorGUI("DrawDefaultPreview", append: true)]
     [ValueDropdown("GetDefaultFonts")]
-    [HideIf("@this.useCustomFont")]
+    [HideIf("@this.useCustomFont || !this.useDefaultFont")]
     [OnValueChanged("ResetNoPreviewFontBool")]
     [InfoBox(
         "Could Not Find Associated Font from TMP_FontAsset, Make sure That the Original Font File Is With the TMP_FontAsset!",
         InfoMessageType.Warning, VisibleIf = "_noPreviewFontFound")]
     [HideLabel]
-    [Title("Default Sprite Settings")]
+    [Title("Default Font Settings")]
     public TMP_FontAsset defaultFont;
 
-    [TabGroup("$key/Item", "Font", SdfIconType.Type)] [Title("Custom Sprite Settings")]
-    public bool useCustomFont;
-
-    [TabGroup("$key/Item", "Font")] [ShowIf("useCustomFont")]
+    [TabGroup("$key/Item", "Font")]
+    [ShowIf("useCustomFont")]
     [InfoBox(
         "Could Not Find Associated Font From TMP_FontAsset, Make Sure That The Original Font File Exits And Has The Same Name As the TMP_FontAsset Or Use Manual Font Preview!",
         InfoMessageType.Warning, VisibleIf = "_noPreviewFontFound")]
-    [OnValueChanged("ResetNoPreviewFontBool")][OnInspectorGUI("DrawCustomPreview", append: true)]
+    [OnValueChanged("ResetNoPreviewFontBool")]
+    [OnInspectorGUI("DrawCustomPreview", append: true)]
     public TMP_FontAsset customFont;
 
-    [ShowIf("useCustomFont")]
-    [TabGroup("$key/Item", "Font")]
+    [ShowIf("useCustomFont")] [TabGroup("$key/Item", "Font")]
     public bool useManualPreviewFont;
 
-    [ShowIf("useManualPreviewFont")]
-    [TabGroup("$key/Item", "Font")]
+    [ShowIf("useManualPreviewFont")] [TabGroup("$key/Item", "Font")]
     public Font manualPreviewFont;
 
     [TabGroup("$key/Item", "Font")] [HideIf("autoSize")] [Title("Size Settings")] [MinValue(1f)]
@@ -57,12 +61,25 @@ public class CustomTextItemData : ScriptableObject
 
     [TabGroup("$key/Item", "Font")] public bool autoSize;
     
-    [EnumToggleButtons] [HideLabel] [Title("Middle Alignment Settings")]
-    [TabGroup("$key/Item", "Font")] 
-    [InfoBox("Due to inconsistent vertical center alignment when using TextMeshPro with a custom font, try each of these settings for better centering on the vertical axis.")]
-    public MiddleAlignment middleAlignmentOptions = MiddleAlignment.Capline;
+    [EnumToggleButtons] [HideLabel] [Title("Font Style Settings")] [TabGroup("$key/Item", "Font")]
+    public FontStyles fontStyle;
+    
+    [EnumToggleButtons] [HideLabel] [Title("Font Case Settings")] [TabGroup("$key/Item", "Font")]
+    public FontCases fontCase = FontCases.Default;
 
-    [HideInInlineEditors] public GroupData[] groupData;
+    [TabGroup("$key/Item", "Font")] [Title("Spacing Settings (em)")] [HideLabel]
+    public FontSpacingOptions spacingOptions;
+
+    [EnumToggleButtons] [HideLabel] [Title("Alignment Settings")] [TabGroup("$key/Item", "Font")]
+    public Alignment alignment = Alignment.Center; 
+
+    [EnumToggleButtons]
+    [HideLabel]
+    [Title("Middle Alignment Settings")]
+    [TabGroup("$key/Item", "Font")]
+    [InfoBox(
+        "Due to inconsistent vertical center alignment when using TextMeshPro with a custom font, try each of these settings for better centering on the vertical axis.")]
+    public MiddleAlignment middleAlignmentOptions = MiddleAlignment.Capline;
 
     private const string GUIPath =
         "Packages/com.sportsim.adminsystem/Runtime/MenuComponents/Components/DynamicSystem/GUI/Universal/Fonts";
@@ -71,16 +88,8 @@ public class CustomTextItemData : ScriptableObject
     private bool _noPreviewFontFound;
 
     private bool _wasUsingCustomFont;
-    
 
-    public enum MiddleAlignment
-    {
-        Middle,
-        Baseline,
-        Midline,
-        Capline
-    }
-
+#if UNITY_EDITOR
     protected virtual IEnumerable GetDefaultFonts()
     {
         return (from asset in FindAssets("t:TMP_FontAsset", new[] { GUIPath })
@@ -90,85 +99,8 @@ public class CustomTextItemData : ScriptableObject
             into fontAsset
             let groupPath = GetValueDropdownGroup(
                 fontAsset.name,
-                groupData)
+                new[] { "PublicSans", "Poppins" })
             select new ValueDropdownItem(groupPath + fontAsset.name, fontAsset)).Cast<object>();
-    }
-
-    private static string GetValueDropdownGroup(string valueName, IEnumerable<GroupData> group)
-    {
-        return (from groupArray in @group
-            from groupName in groupArray.groups
-            where valueName.Contains(groupName)
-            select groupName).Aggregate("", (current, groupName) => current + $"{groupName}/");
-    }
-
-    private void ResetNoPreviewFontBool()
-    {
-        _noPreviewFontFound = false;
-    }
- private void DrawDefaultPreview()
-    {
-        if (_wasUsingCustomFont)
-        {
-            _noPreviewFontFound = false;
-            _wasUsingCustomFont = false;
-        }
-        
-        if (defaultFont == null || _noPreviewFontFound) return;
-
-        Font font;
-
-        if (_previewFont != null && defaultFont.name.Contains(_previewFont.name))
-        {
-            font = _previewFont;
-        }
-        else
-        {
-            if (!TryGetFontFromTmpFontAsset(defaultFont, out font))
-            {
-                _noPreviewFontFound = true;
-                return;
-            }
-
-            _previewFont = font;
-        }
-
-        CreateFontPreviewGUI(font);
-    }
-    
-    private void DrawCustomPreview()
-    {
-        if (customFont == null || (_noPreviewFontFound && !useManualPreviewFont)) return;
-        
-        _wasUsingCustomFont = true;
-
-        Font font;
-
-        if (!useManualPreviewFont)
-        {
-            if (_previewFont != null && customFont.name.Contains(_previewFont.name))
-            {
-                font = _previewFont;
-            }
-            else
-            {
-                if (!TryGetFontInAssetDataBase(customFont.name, out font))
-                {
-                    _noPreviewFontFound = true;
-                    return;
-                }
-
-                _previewFont = font;
-            }
-        }
-        else
-        {
-            if(manualPreviewFont == null) return;
-
-            font = manualPreviewFont;
-        }
-        
-        CreateFontPreviewGUI(font);
     }
     
     private static void CreateFontPreviewGUI(Font font)
@@ -210,6 +142,85 @@ public class CustomTextItemData : ScriptableObject
         EditorGUI.LabelField(textRect, exampleText, style);
     }
 
+
+    private string GetValueDropdownGroup(string valueName, params string[][] group)
+    {
+        return (from groupArray in @group
+            from groupName in groupArray
+            where valueName.Contains(groupName)
+            select groupName).Aggregate("", (current, groupName) => current + $"{groupName}/");
+    }
+
+    private void ResetNoPreviewFontBool()
+    {
+        _noPreviewFontFound = false;
+    }
+
+    private void DrawDefaultPreview()
+    {
+        if (_wasUsingCustomFont)
+        {
+            _noPreviewFontFound = false;
+            _wasUsingCustomFont = false;
+        }
+
+        if (defaultFont == null || _noPreviewFontFound) return;
+
+        Font font;
+
+        if (_previewFont != null && defaultFont.name.Contains(_previewFont.name))
+        {
+            font = _previewFont;
+        }
+        else
+        {
+            if (!TryGetFontFromTmpFontAsset(defaultFont, out font))
+            {
+                _noPreviewFontFound = true;
+                return;
+            }
+
+            _previewFont = font;
+        }
+
+        CreateFontPreviewGUI(font);
+    }
+
+    private void DrawCustomPreview()
+    {
+        if (customFont == null || (_noPreviewFontFound && !useManualPreviewFont)) return;
+
+        _wasUsingCustomFont = true;
+
+        Font font;
+
+        if (!useManualPreviewFont)
+        {
+            if (_previewFont != null && customFont.name.Contains(_previewFont.name))
+            {
+                font = _previewFont;
+            }
+            else
+            {
+                if (!TryGetFontInAssetDataBase(customFont.name, out font))
+                {
+                    _noPreviewFontFound = true;
+                    return;
+                }
+
+                _previewFont = font;
+            }
+        }
+        else
+        {
+            if (manualPreviewFont == null) return;
+
+            font = manualPreviewFont;
+        }
+
+        CreateFontPreviewGUI(font);
+    }
+
     private static bool TryGetFontFromTmpFontAsset(Object tmpFontAsset, out Font font)
     {
         font = FindAssets("t:Font", new[] { GUIPath })
@@ -222,11 +233,11 @@ public class CustomTextItemData : ScriptableObject
     private static bool TryGetFontInAssetDataBase(string tmpFontName, out Font font)
     {
         var fontName = tmpFontName.Replace("SDF", "");
-        
+
         var fontGuids = FindAssets(fontName + " t:Font");
 
         font = null;
-        
+
         if (fontGuids.Length > 0)
         {
             var fontPath = GUIDToAssetPath(fontGuids[0]);
@@ -236,6 +247,6 @@ public class CustomTextItemData : ScriptableObject
 
         return true;
     }
-
-    
+        
+#endif    
 }

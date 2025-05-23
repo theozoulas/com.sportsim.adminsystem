@@ -12,7 +12,7 @@ namespace MenuComponents.Utility
         [SerializeField] private SceneReference[] menuScenes;
 
 
-        private void Start()
+        private void Awake()
         {
             foreach (var scene in menuScenes)
             {

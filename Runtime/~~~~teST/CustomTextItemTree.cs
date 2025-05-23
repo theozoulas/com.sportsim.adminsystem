@@ -8,7 +8,11 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
+#if UNITY_EDITOR
+using static UnityEditor.AssetDatabase;
+#endif   
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
 {
     [Title("Custom Text Item Data")]
@@ -32,6 +36,8 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
 
     public Dictionary<string, CustomTextItemData> CustomTextItemDataDic =>
         customTextItemDynamicData.ToDictionary(cd => cd.key, cd => cd);
+    
+#if UNITY_EDITOR
 
     [PropertySpace(20)]
     [InfoBox("Custom Text Item Data Name Is Empty Or Already In Use!", InfoMessageType.Error, VisibleIf = "@_error")]
@@ -41,7 +47,7 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
     {
         _error = false;
 
-        if (AssetDatabase.LoadAssetAtPath<CustomTextItemData>(
+        if (LoadAssetAtPath<CustomTextItemData>(
                 $"Assets/Resources/AdminSystem/TextItemData/{newCustomTextItemDataName}.asset") != null)
         {
             _error = true;
@@ -58,18 +64,18 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
 
         newCustomTextItemData.key = newCustomTextItemDataName;
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-            AssetDatabase.CreateFolder("Assets", "Resources");
+        if (!IsValidFolder("Assets/Resources"))
+            CreateFolder("Assets", "Resources");
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem"))
-            AssetDatabase.CreateFolder("Assets/Resources", "AdminSystem");
+        if (!IsValidFolder("Assets/Resources/AdminSystem"))
+            CreateFolder("Assets/Resources", "AdminSystem");
 
-        if (!AssetDatabase.IsValidFolder("Assets/Resources/AdminSystem/TextItemData"))
-            AssetDatabase.CreateFolder("Assets/Resources/AdminSystem", "TextItemData");
+        if (!IsValidFolder("Assets/Resources/AdminSystem/TextItemData"))
+            CreateFolder("Assets/Resources/AdminSystem", "TextItemData");
 
-        AssetDatabase.CreateAsset(newCustomTextItemData,
+        CreateAsset(newCustomTextItemData,
             $"Assets/Resources/AdminSystem/TextItemData/{newCustomTextItemDataName}.asset");
-        AssetDatabase.SaveAssets();
+        SaveAssets();
 
         customTextItemDynamicData.Add(newCustomTextItemData);
 
@@ -93,8 +99,8 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
     {
         customTextItemDynamicData.Remove(asset as CustomTextItemData);
 
-        AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(asset));
-        AssetDatabase.SaveAssets();
+        AssetDatabase.DeleteAsset(GetAssetPath(asset));
+        SaveAssets();
     }
 
     [OnInspectorInit]
@@ -106,7 +112,6 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
         newCustomTextItemDataName = "New Custom Text Item Data";
         var textItemData = DefaultTextItemTree.Instance.defaultItemData[0];
         newCustomTextItemData.defaultFont = textItemData.defaultFont;
-        newCustomTextItemData.groupData = textItemData.groupData;
 
         ResetError();
     }
@@ -115,4 +120,5 @@ public class CustomTextItemTree : GlobalConfig<CustomTextItemTree>
     {
         _error = false;
     }
+#endif   
 }

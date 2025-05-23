@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4322211168a545efa70b5406b2f9ca4d, type: 3}
   m_Name: 1 SplashButton
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0, a: 1}
-  defaultSprite: {fileID: 21300000, guid: 22553c854f356ae4da10a3245ce1bb3a, type: 3}
+  colour: {r: 0.7155092, g: 1, b: 0, a: 1}
+  defaultSprite: {fileID: 21300000, guid: 11a9568810c20644497a68fe5148d2bc, type: 3}
   useCustomSprite: 0
-  customSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  customSprite: {fileID: 21300000, guid: 722abb944646bbb4594d95cb3c5cfc6d, type: 3}
   spriteSize: {x: 677, y: 208}
   useCustomSize: 0
-  customSpriteSize: {x: 196.4, y: 101.5}
+  customSpriteSize: {x: 360.61, y: 101.5}
   key: SplashButton
   noDefaultSprite: 0
   menuItemType: Button

@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using MenuComponents.DynamicSystem;
 using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.Serialization;
+#if UNITY_EDITOR
 using static UnityEditor.AssetDatabase;
+#endif    
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public class DefaultMenuItemTree : GlobalConfig<DefaultMenuItemTree>
 {
+#if UNITY_EDITOR
     [Title("Default Menu Item Data")] [ListDrawerSettings(IsReadOnly = true, ShowFoldout = false)] [LabelText("  ")]
     public MenuItemData[] defaultItemData;
 
@@ -42,4 +40,5 @@ public class DefaultMenuItemTree : GlobalConfig<DefaultMenuItemTree>
 
         defaultItemData = items.Select(a => LoadAssetAtPath<MenuItemData>(GUIDToAssetPath(a))).ToArray();
     }
+#endif    
 }

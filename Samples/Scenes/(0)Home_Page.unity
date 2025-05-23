@@ -271,7 +271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 61578b4e3ed35474d9e74d6ef2ba0e72, type: 2}
 --- !u!114 &120174001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: bc6a4480fd209d1419e1dab16c1836a6, type: 2}
 --- !u!1 &247026401
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 9bc7c0ef0db067f47a1e46330ab854b7, type: 2}
 --- !u!114 &247026406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,7 +443,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: f81bbdcbef7ae3449ac14a6aa2945d29, type: 2}
 --- !u!1 &287369220
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,9 +637,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73c8a1e2d02c64faad0561e35766c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultDataKey: Background
+  defaultDataKey: 
   useCustomData: 0
   customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &565555113
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,16 +842,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.7155092, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 22553c854f356ae4da10a3245ce1bb3a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 11a9568810c20644497a68fe5148d2bc, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -885,6 +882,7 @@ MonoBehaviour:
   defaultDataKey: SplashButton
   useCustomData: 0
   customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &989413409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1070,7 +1068,7 @@ GameObject:
   - component: {fileID: 1233180012}
   - component: {fileID: 1233180015}
   - component: {fileID: 1233180014}
-  - component: {fileID: 1233180013}
+  - component: {fileID: 1233180016}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1095,21 +1093,8 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 780}
-  m_SizeDelta: {x: 850, y: 197}
+  m_SizeDelta: {x: 626, y: 229}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1233180013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233180011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c0cb7d4028a6d42be2d493fc3584f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logoDynamicData: {fileID: 11400000, guid: f61bd9fafab4bfb49a20aa4a76c47719, type: 2}
 --- !u!114 &1233180014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1115,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe44347402703e54ab866084a982eccd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 48f5d49f59b60c54f94109dc74071a1a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1148,6 +1133,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233180011}
   m_CullTransparentMesh: 0
+--- !u!114 &1233180016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233180011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c853f9f28ad3146a7eb4ce9e4a475c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultDataKey: 
+  useCustomData: 0
+  customData: 
+  disableImageDynamicFeatures: 0
 --- !u!1 &1233184695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1501,7 +1502,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e92ce25f8512644ba4d73f27365e9bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customMenuItemData: {fileID: 11400000, guid: 61578b4e3ed35474d9e74d6ef2ba0e72, type: 2}
 --- !u!114 &2072507396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1514,7 +1514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f064cdd88be2c08499e111f15dc926dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fontData: {fileID: 11400000, guid: 8394e95f316b542409acf21f2bc7887c, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

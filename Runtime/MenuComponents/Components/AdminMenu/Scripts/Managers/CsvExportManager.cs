@@ -108,7 +108,7 @@ namespace MenuComponents.Components.AdminMenu
                              })
                              .Select(@t =>
                                  @t.csvLine + @t.player.TimeRegistered.WriteCsvLine() +
-                                 @t.player.Score.ToString().WriteCsvLine()))
+                                 @t.player.ScoreFormatted.WriteCsvLine()))
                 {
                     writer.WriteLine(csvLine);
                 }

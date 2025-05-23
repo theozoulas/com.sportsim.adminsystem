@@ -6,6 +6,7 @@ using Sirenix.Utilities;
 using UnityEditor;
 using UnityEngine;
 
+[GlobalConfig("Assets/Resources/AdminSystem/ConfigFiles/")]
 public  class BaseDynamicMenu : GlobalConfig<BaseDynamicMenu>
 {
     /// <summary>

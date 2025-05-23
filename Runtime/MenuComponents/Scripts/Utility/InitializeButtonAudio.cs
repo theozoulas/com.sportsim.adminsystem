@@ -30,7 +30,7 @@ namespace MenuComponents.Utility
                 Resources.FindObjectsOfTypeAll<Selectable>()
                     .Where
                     (res => res.gameObject.scene.buildIndex == CurrentBuildIndex &&
-                            !res.CompareTag("NoSound"))
+                            !res.CompareTag("Player"))
                     .ToArray();
             
             FindAllSelectables(allButtons);

@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +11,25 @@ namespace MenuComponents.DynamicSystem
 {
     public class ImageDynamicController : MonoBehaviour
     {
-        [ValueDropdown("DefaultColourDataKeys")]
+#if UNITY_EDITOR
+        [ValueDropdown("DefaultMenuItemDataKeys")]
         public string defaultDataKey;
 
         [ShowIf("CustomDataExits")] public bool useCustomData;
 
-        [ShowIf("@this.useCustomData && this.CustomDataExits")] [ValueDropdown("CustomColourDataKeys")]
+        [ShowIf("@this.useCustomData && this.CustomDataExits")] [ValueDropdown("CustomMenuItemDataKeys")]
         public string customData;
 
-        [Title("Bitmask Enum")] [EnumToggleButtons] [HideLabel]
+        [Title("Dynamic Settings")] [EnumToggleButtons] [HideLabel]
         public DisableImageDynamicFeatureOptions disableImageDynamicFeatures;
 
-        private IEnumerable<string> DefaultColourDataKeys
+        private IEnumerable<string> DefaultMenuItemDataKeys
             => DefaultMenuItemTree.Instance.defaultItemData.Select(cd => cd.key);
 
-        private IEnumerable<string> CustomColourDataKeys
+        private IEnumerable<string> CustomMenuItemDataKeys
             => CustomMenuItemTree.Instance.customMenuItemDynamicData.Select(cd => cd.key);
 
-        private bool CustomDataExits => CustomColourDataKeys.Any();
+        private bool CustomDataExits => CustomMenuItemDataKeys.Any();
 
         [Flags]
         public enum DisableImageDynamicFeatureOptions
@@ -41,7 +42,9 @@ namespace MenuComponents.DynamicSystem
 
         public void OnValidate()
         {
-            if (!CustomColourDataKeys.Any()) customData = "";
+            if (defaultDataKey == null) return;
+
+            if (!CustomMenuItemDataKeys.Any()) customData = "";
 
             var image = GetComponent<Image>();
 
@@ -61,7 +64,7 @@ namespace MenuComponents.DynamicSystem
             }
 
             if (!disableImageDynamicFeatures.HasFlag(DisableImageDynamicFeatureOptions.DisableColour))
-                image.color = defaultData.color;
+                image.color = defaultData.colour;
 
             var rectTransform = image.GetComponent<RectTransform>();
 
@@ -77,7 +80,7 @@ namespace MenuComponents.DynamicSystem
                     rectTransform.sizeDelta = defaultData.customSpriteSize;
                 }
             }
-            
+
             if (disableImageDynamicFeatures.HasFlag(DisableImageDynamicFeatureOptions.DisableSprite)) return true;
 
             if (defaultData.useCustomSprite && defaultData.customSprite != null)
@@ -108,12 +111,26 @@ namespace MenuComponents.DynamicSystem
                 return;
             }
 
-            image.color = data.colour;
+            if (!disableImageDynamicFeatures.HasFlag(DisableImageDynamicFeatureOptions.DisableColour))
+                image.color = data.colour;
 
-            if (data.spriteSize != Vector2.zero)
+            var rectTransform = image.GetComponent<RectTransform>();
+
+            if (!disableImageDynamicFeatures.HasFlag(DisableImageDynamicFeatureOptions.DisableSize))
             {
-                image.GetComponent<RectTransform>().sizeDelta = data.spriteSize;
+                if (data.spriteSize != Vector2.zero &&
+                    (data.useDefaultSprite || (data.useCustomSprite && data.customSprite != null)))
+                {
+                    rectTransform.sizeDelta = data.spriteSize;
+                }
+
+                if (data.useCustomSize)
+                {
+                    rectTransform.sizeDelta = data.customSpriteSize;
+                }
             }
+
+            if (disableImageDynamicFeatures.HasFlag(DisableImageDynamicFeatureOptions.DisableSprite)) return;
 
             if (data.useCustomSprite && data.customSprite != null)
             {
@@ -124,6 +141,6 @@ namespace MenuComponents.DynamicSystem
             if (!data.useDefaultSprite || data.defaultSprite == null) return;
             image.sprite = data.defaultSprite;
         }
+#endif   
     }
 }
-#endif

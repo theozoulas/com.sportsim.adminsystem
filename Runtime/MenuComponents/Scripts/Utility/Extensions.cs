@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
+
 
 namespace MenuComponents.Utility
 {
@@ -52,6 +54,8 @@ namespace MenuComponents.Utility
 
             return resizedTexture;
         }
+        
+        
 
         /// <summary>
         /// Static Get Method <c>CalculateConstrainedSize</c> Calculates a new size that fits within specified constraints while maintaining the original aspect ratio.

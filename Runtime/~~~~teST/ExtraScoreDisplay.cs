@@ -30,13 +30,13 @@ public class ExtraScoreDisplay : MonoBehaviour
     {
         if(!ExtraDataExist) return;
         
-        if (!TryGetExtraScoreFromId(extraScoreDataKey, out var reactionSpeed))
+        if (!TryGetExtraScoreFromId(extraScoreDataKey, out var scoreData))
         {
             Debug.LogError($"Could Not Find Extra Score With Key:{extraScoreDataKey}");
             return;
         }
 
-        _text.text = reactionSpeed.GetAsStringFormatted();
+        _text.text = scoreData.GetAsStringFormatted();
     }
     
 }
